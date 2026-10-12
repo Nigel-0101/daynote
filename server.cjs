@@ -6,8 +6,12 @@ const page = path.join(__dirname, 'index.html');
 http.createServer((req, res) => {
   const pathname = new URL(req.url, 'http://localhost').pathname;
   if (pathname === '/favicon.ico') { res.writeHead(204); res.end(); return; }
-  if (pathname !== '/' && pathname !== '/index.html') { res.writeHead(404); res.end('Not found'); return; }
+  const assets = {'/assets/SourceHanSansCN-VF.woff2':['SourceHanSansCN-VF.woff2','font/woff2'],'/assets/SourceHanSans-LICENSE.txt':['SourceHanSans-LICENSE.txt','text/plain; charset=utf-8']};
+  const asset = assets[pathname];
+  if (pathname !== '/' && pathname !== '/index.html' && !asset) { res.writeHead(404); res.end('Not found'); return; }
   if (!['GET', 'HEAD'].includes(req.method)) { res.writeHead(405, { Allow: 'GET, HEAD' }); res.end(); return; }
-  res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' });
-  if (req.method === 'HEAD') res.end(); else fs.createReadStream(page).pipe(res);
+  const target=asset?path.join(__dirname,'assets',asset[0]):page;
+  if(!fs.existsSync(target)){res.writeHead(404);res.end('Not found');return;}
+  res.writeHead(200, { 'Content-Type': asset?asset[1]:'text/html; charset=utf-8', 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' });
+  if (req.method === 'HEAD') res.end(); else fs.createReadStream(target).pipe(res);
 }).listen(port, '127.0.0.1', () => console.log(`Daynote ready at http://127.0.0.1:${port}`));
