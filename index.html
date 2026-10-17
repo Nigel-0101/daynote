@@ -499,15 +499,29 @@ const renderOriginal=render;
 render=function(){renderOriginal();renderProjects();renderProjectDetail();renderLogs();renderCalendar();$('#project-names').innerHTML=store.projects.filter(p=>!p.archived).map(p=>'<option value="'+escapeHTML(p.name)+'"></option>').join('')};
 $('#new-task').onclick=()=>{if(view==='projects')openProject();else if(view==='project')openUpdate(currentProjectId);else if(view==='logs')openLog();else openTask()};
 
-let generatedExportTitle=null;
+let generatedExportTitle=null,generatedExportScope=null;
 function selectedTaskProject(){const name=$('#task-project').value.trim();return {name,id:store.projects.find(p=>p.name===name)?.id||''}}
+function exportDraftScope(project){return JSON.stringify([project.id,project.name])}
+function nextDraftExportCopy(project=selectedTaskProject()){
+  const available=nextExportCopy(project.id,project.name);
+  const current=exportCopies($('#task-title').value).sort(compareCopies).at(-1);
+  const afterDraft=current?incrementCopy(current):available;
+  return compareCopies(afterDraft,available)>0?afterDraft:available;
+}
+function renderExportSuggestion(){
+  const isExport=$('#task-category').value==='剪辑'&&['导出','导出交付'].includes($('#task-stage').value);
+  $('#task-copy-hint').hidden=!isExport;if(!isExport)return;
+  const p=selectedTaskProject();
+  $('#task-copy-text').textContent=(p.name?'此项目':'未关联项目的任务')+'下一版：'+nextDraftExportCopy(p)+'-copy。点击切换，保存后生效。';
+}
 function syncExportSuggestion(force=false){
   const isExport=$('#task-category').value==='剪辑'&&['导出','导出交付'].includes($('#task-stage').value);
   $('#task-copy-hint').hidden=!isExport;
-  if(!isExport){generatedExportTitle=null;return}
-  const p=selectedTaskProject(),copy=nextExportCopy(p.id,p.name),title='导出 '+copy+'-copy';
-  $('#task-copy-text').textContent=(p.name?'此项目':'未关联项目的任务')+'下一版：'+copy+'-copy。保存任务后才会顺延。';
-  if(force||(!editingId&&(!$('#task-title').value.trim()||$('#task-title').value===generatedExportTitle))){$('#task-title').value=title;generatedExportTitle=title}
+  if(!isExport){generatedExportTitle=null;generatedExportScope=null;return}
+  const p=selectedTaskProject(),scope=exportDraftScope(p),title='导出 '+nextExportCopy(p.id,p.name)+'-copy';
+  // Keep a chosen draft version on submit; only reset an automatic title when its project changes.
+  if(force||(!editingId&&(!$('#task-title').value.trim()||($('#task-title').value===generatedExportTitle&&scope!==generatedExportScope)))){$('#task-title').value=title;generatedExportTitle=title}
+  generatedExportScope=scope;renderExportSuggestion();
 }
 function applyEditingTemplate(template,project=null){
   openTask();$('#task-title').value=template.title;$('#task-category').value='剪辑';$('#task-project').value=project?.name||'';$('#task-stage').value=template.stage;$('#task-duration').value=template.duration;$('#task-note').value=template.note;$('#editing-fields').hidden=false;
@@ -515,11 +529,15 @@ function applyEditingTemplate(template,project=null){
   syncExportSuggestion(template.stage==='导出');$('#task-title').focus();
 }
 const workflowOpenTask=openTask;
-openTask=function(...args){generatedExportTitle=null;workflowOpenTask(...args);syncExportSuggestion()};
+openTask=function(...args){generatedExportTitle=null;generatedExportScope=null;workflowOpenTask(...args);syncExportSuggestion()};
+$('#task-title').addEventListener('input',renderExportSuggestion);
 $('#task-project').addEventListener('input',()=>syncExportSuggestion());
 $('#task-stage').addEventListener('change',()=>syncExportSuggestion());
 $('#task-category').addEventListener('change',()=>syncExportSuggestion());
-$('#use-copy-suggestion').onclick=()=>{syncExportSuggestion(true);$('#task-title').focus()};
+$('#use-copy-suggestion').onclick=()=>{
+  const p=selectedTaskProject();generatedExportTitle='导出 '+nextDraftExportCopy(p)+'-copy';generatedExportScope=exportDraftScope(p);
+  $('#task-title').value=generatedExportTitle;renderExportSuggestion();$('#task-title').focus();
+};
 const workflowTaskSubmit=$('#task-form').onsubmit;
 $('#task-form').onsubmit=function(event){syncExportSuggestion();workflowTaskSubmit.call(this,event)};
 document.addEventListener('click',event=>{const b=event.target.closest('[data-add-project-task]');if(!b)return;const p=getProject(b.dataset.addProjectTask);if(!p)return;openTask();$('#task-category').value='剪辑';$('#task-project').value=p.name;$('#editing-fields').hidden=false;$('#task-title').focus()});
