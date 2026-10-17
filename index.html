@@ -52,11 +52,30 @@ body{font-family:var(--body);font-variant-numeric:lining-nums tabular-nums;font-
 .project-inline-tasks>summary{padding:7px 0;min-height:34px}.attendance-day-form .field-row{grid-template-columns:repeat(2,minmax(0,1fr))}.attendance-day-form input{min-width:0}
 @media(max-width:660px){.field input,.field textarea,.field select,.attendance-day-form .field input,.attendance-day-form .field select,.attendance-day-form .field textarea{font-size:16px}.primary,.subtle-button,.nav-button{min-height:40px}.icon-button{min-width:36px;min-height:36px}.task-check{min-width:28px;min-height:28px}.project-card-actions .text-button{min-height:40px}.attendance-history-row{grid-template-columns:100px 1fr}.day-badge{font-size:10px}.calendar-mini-label{font-size:10px}.daily-attendance>details>summary>span{font-size:11px}.attendance-overview-actions .subtle-button{font-size:12px}.attendance-stats strong{font-size:28px}.detail-topline .primary,.detail-topline .subtle-button{font-size:12px}.project-date-line{font-size:12px}}
 
+.sync-loading>.sidebar,.sync-loading>main{visibility:hidden}
+.sync-gate{position:fixed;inset:0;display:grid;place-items:center;padding:24px;background:var(--bg,#f6f7f2);z-index:200}
+.sync-gate[hidden],.sync-actions[hidden]{display:none}
+.sync-card{max-width:480px;width:100%;padding:32px;background:white;border:1px solid var(--line);border-radius:20px;box-shadow:0 12px 48px #304a3c09}
+.sync-card h1{font-size:26px;margin:12px 0}.sync-card p{font-size:14px;line-height:1.9;color:#637061;margin:12px 0 24px;overflow-wrap:anywhere}
+.sync-card .sync-note{font-size:12px;margin-bottom:0}.sync-card .primary{font-size:14px}.sync-card a{margin-left:12px;font-size:13px;color:var(--green);text-decoration:underline}
+.sync-actions{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:-12px 0 22px}.sync-actions button{font-size:12px;padding:9px 13px}
+#save-state{display:flex!important;max-width:220px;line-height:1.5}
+.project-specs{display:flex;flex-wrap:wrap;gap:8px 18px;margin:0 0 18px;font-size:12px;color:#52634a}.project-specs span{display:flex;align-items:baseline;gap:7px}.project-specs small{font-size:10px;color:#86927c}.project-remarks{border-top:1px solid var(--line);padding-top:14px;margin-bottom:20px}.project-remarks strong{font-size:12px}.project-remarks p{white-space:pre-wrap;overflow-wrap:anywhere}.project-spec-fields{padding:16px 0 2px;border-top:1px solid var(--line);margin-top:10px}.project-spec-fields .form-hint{margin:0 0 14px}
+@media(max-width:660px){.top-actions{gap:10px}.topbar{flex-wrap:wrap;height:auto;min-height:74px;padding:12px 0}.sync-card{padding:24px}#save-state{font-size:10px;max-width:130px}}
+
+.planning-toolbar{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;margin-bottom:18px}.range-tabs{display:flex;gap:4px;padding:4px;background:#eaf0e4;border-radius:10px}.range-tabs button{padding:9px 16px;border-radius:7px;font-size:13px;color:#64715e}.range-tabs button[aria-pressed=true]{background:#fff;color:var(--green);box-shadow:0 1px 5px #304a3c10;font-weight:600}.planning-navigation{display:flex;align-items:center;gap:10px}.planning-date-label{position:relative;font-size:12px;color:#5d6d59;cursor:pointer;padding:8px 3px}.planning-date-label input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%}.planning-date-label:focus-within{outline:2px solid var(--green);outline-offset:3px;border-radius:4px}
+.planning-task{display:flex;align-items:flex-start;gap:4px;cursor:grab;border-bottom:1px solid #eff2ec}.planning-task:active{cursor:grabbing}.planning-task .week-mini-task{flex:1;min-width:0;border:0;cursor:inherit}.week-mini-task svg{flex-shrink:0}.task-move-button{flex-shrink:0;padding:10px 2px;color:#8a9680}.task-move-button svg{width:16px;height:16px}.task-move-button:hover{color:var(--green)}.week-card.drop-target{outline:2px solid #7e9b68;background:#f0f6e9}.planning-task.dragging{opacity:.4}.today-card{border-color:#b0c39c}.weekly-grid[data-range=month],.weekly-grid[data-range=half]{grid-template-columns:repeat(4,minmax(0,1fr))}.week-card-date strong{font-size:12px}.week-card{min-width:0}.planning-task button:focus-visible{outline:2px solid var(--green);outline-offset:2px;border-radius:4px}
+@media(min-width:1500px){.weekly-grid[data-range=month],.weekly-grid[data-range=half]{grid-template-columns:repeat(7,minmax(0,1fr))}.weekly-grid[data-range=month] .week-card,.weekly-grid[data-range=half] .week-card{padding:15px 12px}}
+@media(max-width:1100px){.weekly-grid[data-range=month],.weekly-grid[data-range=half]{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:850px){.weekly-grid[data-range=month],.weekly-grid[data-range=half]{grid-template-columns:repeat(2,minmax(0,1fr))}.planning-navigation{flex-wrap:wrap;gap:7px}}
+@media(max-width:660px){.weekly-grid[data-range=month],.weekly-grid[data-range=half]{grid-template-columns:1fr}.planning-toolbar{gap:12px}.range-tabs{width:100%}.range-tabs button{flex:1}.planning-navigation{width:100%;justify-content:space-between}.task-move-button{padding:12px 8px}.planning-date-label{font-size:11px}}
+
 </style>
 </head>
-<body>
+<body class="sync-loading">
+<section id="sync-gate" class="sync-gate" aria-labelledby="sync-title"><div class="sync-card"><span class="brand-sub">DAYNOTE</span><h1 id="sync-title">你的日常，随时接着来。</h1><p id="sync-gate-message" role="status">正在读取你保存在 GitHub 的记录…</p><button class="primary" id="sync-connect">重新连接</button><p class="sync-note">自动保存到 GitHub 私有仓库<br>浏览器只保留设备识别信息。</p></div></section>
 <a class="skip-link" href="#main">跳到日常规划</a>
-<aside class="sidebar" aria-label="主导航">
+<aside inert class="sidebar" aria-label="主导航">
   <button class="brand" data-nav="day" aria-label="日序，回到今天"><span class="brand-symbol" data-icon="sprout"></span><span><span class="brand-name">日序</span><span class="brand-sub" style="display:block">DAYNOTE</span></span></button>
   <section class="identity-card" aria-label="我的身份：剪辑师"><span class="identity-avatar" data-icon="film"></span><div><p class="identity-eyebrow">我的身份</p><p class="identity-title">剪辑师</p><p class="identity-sub">VIDEO EDITOR</p></div></section>
   <div class="nav-label">我的日常</div>
@@ -64,9 +83,9 @@ body{font-family:var(--body);font-variant-numeric:lining-nums tabular-nums;font-
   <section class="focus-card" aria-label="专注计时器"><div class="focus-top"><span><span data-icon="focus"></span>专注片刻</span><select id="focus-mode" class="focus-select" aria-label="专注时长"><option value="25">专注 25 分钟</option><option value="5">休息 5 分钟</option><option value="15">专注 15 分钟</option></select></div><div class="focus-time" id="timer-display">25:00</div><p class="focus-caption" id="timer-caption">一次，只做一件事。</p><div class="focus-actions"><button class="primary" id="timer-toggle"><span data-icon="play"></span><span>开始专注</span></button><button class="focus-reset" id="timer-reset" aria-label="重置计时器"><span data-icon="reset"></span></button></div><span id="timer-announcement" class="sr-only" aria-live="polite"></span></section>
   <footer class="sidebar-footer"><button class="backup-link" id="open-backup"><span data-icon="settings"></span>数据与备份</button><p class="local-caption">只属于你的日常空间</p></footer>
 </aside>
-<main class="main" id="main">
-  <header class="topbar"><div class="breadcrumb"><span>剪辑师的日常</span><span>/</span><strong id="view-name">今日计划</strong></div><div class="top-actions"><span class="save-state" id="save-state">已保存在此浏览器</span><button class="primary" id="new-task"><span data-icon="plus"></span>添加任务</button></div></header>
-  <div class="notice" id="storage-warning" hidden role="alert"></div>
+<main inert class="main" id="main">
+  <header class="topbar"><div class="breadcrumb"><span>剪辑师的日常</span><span>/</span><strong id="view-name">今日计划</strong></div><div class="top-actions"><span class="save-state" id="save-state">正在连接…</span><button class="primary" id="new-task"><span data-icon="plus"></span>添加任务</button></div></header>
+  <div class="notice" id="storage-warning" hidden role="alert"></div><div id="sync-actions" class="sync-actions" hidden><button class="subtle-button" id="sync-retry">重试保存</button><button class="subtle-button" id="sync-export">导出本页改动</button><button class="subtle-button" id="sync-reload" hidden>载入最新记录</button></div>
   <section class="hero"><div><p class="eyebrow" id="hero-eyebrow">A LITTLE PLAN, A LOVELY DAY</p><h1 id="hero-title">今天，慢慢来。</h1><p class="hero-copy" id="hero-copy">给重要的事一点时间，也给自己一点留白。</p></div><div class="hero-right"><div class="date-display"><div class="date-day" id="date-number">08</div><div class="date-month" id="date-month">OCTOBER · 2026</div></div><svg class="sprout" viewBox="0 0 110 120" fill="none" aria-hidden="true"><path d="M14 100C14 80 15 51 24 30C35 4 78 3 91 26C103 45 99 78 97 100" stroke="#dbe4d1" stroke-width="1.5"/><path d="M32 101H83M41 94H77" stroke="#bacba9" stroke-linecap="round"/><path d="M58 91C58 67 62 48 74 29" stroke="#748c60" stroke-width="1.7" stroke-linecap="round"/><path d="M61 64C43 64 34 53 35 40C52 40 61 46 61 64Z" fill="#dce7d0" stroke="#809967" stroke-width="1.3"/><path d="M65 48C82 49 88 40 88 29C74 29 65 35 65 48Z" fill="#c8d9b8" stroke="#7b9264" stroke-width="1.3"/><path d="M59 79C46 79 40 72 40 63C52 63 59 68 59 79Z" fill="#e7eedf" stroke="#93a77e" stroke-width="1.2"/><path d="M40 45L59 62M84 34L67 47M44 67L57 77" stroke="#90a47b" stroke-width="1.1"/><circle cx="31" cy="21" r="2" fill="#d5dfca"/><path d="M88 71v8M84 75h8" stroke="#c2d0b3" stroke-width="1.5" stroke-linecap="round"/></svg></div></section>
   <section class="week-panel" aria-label="选择日期"><div class="week-control"><button class="month-button" id="pick-date" aria-label="选择任意日期"><span id="week-month">2026 年 10 月</span><span data-icon="chevron-down"></span></button><input type="date" id="date-picker" class="sr-only" tabindex="-1" aria-label="跳转到日期"><div class="week-arrows"><button class="icon-button" id="previous-week" aria-label="上一周"><span data-icon="chevron-left"></span></button><button class="text-button" id="back-today">今天</button><button class="icon-button" id="next-week" aria-label="下一周"><span data-icon="chevron-right"></span></button></div></div><div class="week-days" id="week-days"></div></section>
   <section class="mobile-focus" hidden aria-label="移动端专注计时器"><span class="mobile-focus-label"><span data-icon="focus"></span>专注片刻</span><strong id="mobile-timer-display">25:00</strong><button class="primary" id="mobile-timer-toggle">开始</button><button class="icon-button" id="mobile-timer-reset" aria-label="重置计时器"><span data-icon="reset"></span></button></section>
@@ -90,16 +109,16 @@ body{font-family:var(--body);font-variant-numeric:lining-nums tabular-nums;font-
 
   <footer class="footer-line"><span><span class="tiny-flower">✳</span>把日子过成喜欢的样子。</span><span>DAYNOTE &nbsp; / &nbsp; 每一天，都是新的开始</span></footer>
 </main>
-<dialog id="project-dialog" class="wide-dialog" aria-labelledby="project-dialog-title"><form id="project-form"><header class="dialog-header"><h2 id="project-dialog-title">新建一个剪辑项目</h2><button type="button" class="icon-button" data-close="project-dialog" aria-label="关闭项目编辑"><span data-icon="x"></span></button></header><div class="dialog-body"><label class="field">项目名称<input id="project-name" maxlength="80" required placeholder="比如：十月旅行短片" autocomplete="off"></label><label class="field">项目说明<textarea id="project-brief" maxlength="1500" placeholder="想做出什么样的片子？交付要求、画幅、版本，也可以记在这里。"></textarea></label><div class="field-row"><label class="field">开始日期 · 可后补<input type="date" id="project-start"></label><label class="field">预计交付 · 可不填<input type="date" id="project-due"></label></div><div class="members-heading"><h3>参与人员与分工</h3><button class="text-button" type="button" id="add-member"><span data-icon="plus"></span>添加人员</button></div><div id="member-editor"></div><p class="participant-note">记下每个人的名字和负责的部分，后续工作记录可以选择对应人员。</p><p class="form-message" id="project-error" role="alert"></p></div><footer class="dialog-footer"><button type="button" class="archive-action" id="archive-project" hidden>归档项目</button><button type="button" class="subtle-button" data-close="project-dialog">取消</button><button type="submit" class="primary" id="save-project">创建项目</button></footer></form></dialog>
+<dialog id="project-dialog" class="wide-dialog" aria-labelledby="project-dialog-title"><form id="project-form"><header class="dialog-header"><h2 id="project-dialog-title">新建一个剪辑项目</h2><button type="button" class="icon-button" data-close="project-dialog" aria-label="关闭项目编辑"><span data-icon="x"></span></button></header><div class="dialog-body"><label class="field">项目名称<input id="project-name" maxlength="80" required placeholder="比如：十月旅行短片" autocomplete="off"></label><label class="field">项目简介 · 可不填<textarea id="project-brief" maxlength="1500" placeholder="想做出什么样的片子？交付要求、画幅、版本，也可以记在这里。"></textarea></label><div class="project-spec-fields"><p class="form-hint">交付规格 · 都可留空，确定后随时补充</p><div class="field-row"><label class="field">分辨率<input id="project-resolution" maxlength="60" list="resolution-options" placeholder="如 3840 × 2160 / 4K"></label><label class="field">帧率 · fps<input id="project-frame-rate" type="number" min="1" max="1000" step="any" placeholder="如 25 / 29.97"></label></div><label class="field">成片时长<input id="project-runtime" maxlength="60" placeholder="如 3 分 30 秒 / 约 5 分钟"></label><label class="field">备注<textarea id="project-remarks" maxlength="1500" placeholder="交付版本、特殊要求或暂时待确认的事"></textarea></label><datalist id="resolution-options"><option value="1920 × 1080"><option value="3840 × 2160"><option value="4096 × 2160"><option value="1080 × 1920"></datalist></div><div class="field-row"><label class="field">开始日期 · 可后补<input type="date" id="project-start"></label><label class="field">预计交付 · 可不填<input type="date" id="project-due"></label></div><div class="members-heading"><h3>参与人员与分工</h3><button class="text-button" type="button" id="add-member"><span data-icon="plus"></span>添加人员</button></div><div id="member-editor"></div><p class="participant-note">记下每个人的名字和负责的部分，后续工作记录可以选择对应人员。</p><p class="form-message" id="project-error" role="alert"></p></div><footer class="dialog-footer"><button type="button" class="archive-action" id="archive-project" hidden>归档项目</button><button type="button" class="subtle-button" data-close="project-dialog">取消</button><button type="submit" class="primary" id="save-project">创建项目</button></footer></form></dialog>
 <dialog id="update-dialog" class="wide-dialog" aria-labelledby="update-dialog-title"><form id="update-form"><header class="dialog-header"><h2 id="update-dialog-title">更新项目进度</h2><button type="button" class="icon-button" data-close="update-dialog" aria-label="关闭进度更新"><span data-icon="x"></span></button></header><div class="dialog-body"><p class="dialog-description" id="update-project-name"></p><div class="field-row"><label class="field">项目状态<select id="update-status"><option value="planning">筹备中</option><option value="active">进行中</option><option value="feedback">待反馈</option><option value="paused">已暂停</option><option value="done">已完成</option></select></label><label class="field">当前阶段<select id="update-stage"><option>前期沟通</option><option>拍摄</option><option>素材整理</option><option>粗剪</option><option>精剪</option><option>包装</option><option>字幕</option><option>调色</option><option>导出</option><option>项目备份</option><option>审片反馈</option><option>字幕调色</option><option>导出交付</option><option>已交付</option></select></label></div><label class="field">整体完成度<div class="range-wrap"><input id="update-progress" type="range" min="0" max="100" step="1" value="0"><output for="update-progress" id="update-progress-value">0%</output></div></label><label class="field">最新进展<textarea id="update-summary" maxlength="1500" required placeholder="比如：粗剪 v2 已完成，等反馈后调整后半段节奏。"></textarea></label><label class="field">下一步 · 可不填<input id="update-next" maxlength="300" placeholder="比如：明天下午统一字幕样式"></label><div class="field-row"><label class="field">更新时间<input type="datetime-local" id="update-at" required></label><label class="field">记录人<input id="update-author" maxlength="40" list="project-people" required></label></div><p class="form-message" id="update-error" role="alert"></p></div><footer class="dialog-footer"><button type="button" class="subtle-button" data-close="update-dialog">取消</button><button class="primary" type="submit">保存进度</button></footer></form></dialog>
 <dialog id="log-dialog" class="wide-dialog" aria-labelledby="log-dialog-title"><form id="log-form"><header class="dialog-header"><h2 id="log-dialog-title">记下这段工作</h2><button type="button" class="icon-button" data-close="log-dialog" aria-label="关闭工作记录"><span data-icon="x"></span></button></header><div class="dialog-body"><label class="field">关联项目<select id="log-project" required></select></label><div class="field-row"><label class="field">工作日期<input id="log-date" type="date" required></label><label class="field">参与人员<input id="log-person" list="project-people" maxlength="40" required placeholder="谁完成了这段工作"></label></div><div class="field-row"><label class="field">从几点<input id="log-start" type="time" required></label><label class="field">到几点<input id="log-end" type="time" required></label></div><label class="field-checkbox"><input type="checkbox" id="log-overnight">结束时间在次日</label><p class="form-hint">跨午夜也可以记在同一条，工时按实际跨度计算。</p><label class="field">工作阶段<select id="log-stage"><option>前期沟通</option><option>拍摄</option><option>素材整理</option><option>粗剪</option><option>精剪</option><option>包装</option><option>字幕</option><option>调色</option><option>导出</option><option>项目备份</option><option>审片反馈</option><option>字幕调色</option><option>导出交付</option></select></label><label class="field">这段时间做了什么<textarea id="log-content" maxlength="2000" required placeholder="例如：整理 A 机位素材，完成前 30 秒粗剪，替换了片头音乐。"></textarea></label><label class="field">接下来要做 · 可不填<input id="log-next" maxlength="300" placeholder="留下一个方便下次继续的提示"></label><p class="form-message" id="log-error" role="alert"></p></div><footer class="dialog-footer"><button type="button" class="delete-task" id="delete-log" hidden>删除记录</button><button type="button" class="subtle-button" data-close="log-dialog">取消</button><button class="primary" type="submit">保存记录</button></footer></form></dialog>
 <datalist id="project-people"></datalist><datalist id="project-names"></datalist>
 
 <input type="file" id="attendance-import" accept=".json,application/json" hidden>
-<dialog id="attendance-settings-dialog" class="wide-dialog" aria-labelledby="attendance-settings-title"><form id="attendance-settings-form"><header class="dialog-header"><h2 id="attendance-settings-title">工作与调休设置</h2><button type="button" class="icon-button" data-close="attendance-settings-dialog" aria-label="关闭考勤设置"><span data-icon="x"></span></button></header><div class="dialog-body"><div class="field-row"><label class="field">工作单位<input name="company" maxlength="80" placeholder="填写后只保存在你的浏览器"></label><label class="field">入职日期<input name="start" type="date"></label></div><div class="field"><span>通常工作日</span><div class="weekday-checkboxes"><label><input type="checkbox" name="weekday" value="1">一</label><label><input type="checkbox" name="weekday" value="2">二</label><label><input type="checkbox" name="weekday" value="3">三</label><label><input type="checkbox" name="weekday" value="4">四</label><label><input type="checkbox" name="weekday" value="5">五</label><label><input type="checkbox" name="weekday" value="6">六</label><label><input type="checkbox" name="weekday" value="0">日</label></div></div><label class="field-checkbox"><input name="followHolidays" type="checkbox">排班估算参考已收录的法定放假与补班安排</label><h3 class="settings-section-title">标准作息</h3><div class="field-row"><label class="field">上班<input type="time" name="workStart" required></label><label class="field">下班<input type="time" name="workEnd" required></label><label class="field">午休开始<input type="time" name="lunchStart" required></label><label class="field">午休结束<input type="time" name="lunchEnd" required></label></div><h3 class="settings-section-title">加班与调休</h3><div class="field-row"><label class="field">每个周末加班日换调休天数<input type="number" name="creditPerDay" min="0" max="10" step="0.5" required></label><label class="field">期初调休余额 · 天<input type="number" name="openingBalance" min="-10000" max="10000" step="0.5" required></label><label class="field">晚下班顺延起点<input type="time" name="lateThreshold" required></label><label class="field">下班整点后间隔小时<input type="number" name="restHours" min="0" max="24" step="1" required></label></div><p class="attendance-hint">平日延时只记录时长，不增加调休。跨午夜加班按开始日归属。同一天多段工作合计为一个加班日。次日建议按下班整点顺延，例如 22:30 → 10:00。</p><p id="attendance-settings-error" class="form-message" role="alert"></p></div><footer class="dialog-footer"><button type="button" class="subtle-button" data-close="attendance-settings-dialog">取消</button><button type="submit" class="primary">保存设置</button></footer></form></dialog>
+<dialog id="attendance-settings-dialog" class="wide-dialog" aria-labelledby="attendance-settings-title"><form id="attendance-settings-form"><header class="dialog-header"><h2 id="attendance-settings-title">工作与调休设置</h2><button type="button" class="icon-button" data-close="attendance-settings-dialog" aria-label="关闭考勤设置"><span data-icon="x"></span></button></header><div class="dialog-body"><div class="field-row"><label class="field">工作单位<input name="company" maxlength="80" placeholder="如：公司或工作室"></label><label class="field">入职日期<input name="start" type="date"></label></div><div class="field"><span>通常工作日</span><div class="weekday-checkboxes"><label><input type="checkbox" name="weekday" value="1">一</label><label><input type="checkbox" name="weekday" value="2">二</label><label><input type="checkbox" name="weekday" value="3">三</label><label><input type="checkbox" name="weekday" value="4">四</label><label><input type="checkbox" name="weekday" value="5">五</label><label><input type="checkbox" name="weekday" value="6">六</label><label><input type="checkbox" name="weekday" value="0">日</label></div></div><label class="field-checkbox"><input name="followHolidays" type="checkbox">排班估算参考已收录的法定放假与补班安排</label><h3 class="settings-section-title">标准作息</h3><div class="field-row"><label class="field">上班<input type="time" name="workStart" required></label><label class="field">下班<input type="time" name="workEnd" required></label><label class="field">午休开始<input type="time" name="lunchStart" required></label><label class="field">午休结束<input type="time" name="lunchEnd" required></label></div><h3 class="settings-section-title">加班与调休</h3><div class="field-row"><label class="field">每个周末加班日换调休天数<input type="number" name="creditPerDay" min="0" max="10" step="0.5" required></label><label class="field">期初调休余额 · 天<input type="number" name="openingBalance" min="-10000" max="10000" step="0.5" required></label><label class="field">晚下班顺延起点<input type="time" name="lateThreshold" required></label><label class="field">下班整点后间隔小时<input type="number" name="restHours" min="0" max="24" step="1" required></label></div><p class="attendance-hint">平日延时只记录时长，不增加调休。跨午夜加班按开始日归属。同一天多段工作合计为一个加班日。次日建议按下班整点顺延，例如 22:30 → 10:00。</p><p id="attendance-settings-error" class="form-message" role="alert"></p></div><footer class="dialog-footer"><button type="button" class="subtle-button" data-close="attendance-settings-dialog">取消</button><button type="submit" class="primary">保存设置</button></footer></form></dialog>
 
-<dialog id="task-dialog" aria-labelledby="task-dialog-title"><form id="task-form"><header class="dialog-header"><h2 id="task-dialog-title">记下一件小事</h2><button type="button" class="icon-button" data-close="task-dialog" aria-label="关闭任务编辑"><span data-icon="x"></span></button></header><div class="dialog-body"><label class="field">想做什么<input id="task-title" name="title" maxlength="120" required placeholder="比如，读完一直想看的那本书" autocomplete="off"></label><div class="field-row"><label class="field">安排在哪一天<input type="date" id="task-date" name="date" required></label><label class="field">分类<select id="task-category" name="category"><option>生活</option><option>工作</option><option>剪辑</option><option>学习</option></select></label></div><div class="editing-fields" id="editing-fields" hidden><div class="field-row"><label class="field">所属项目 · 可不填<input id="task-project" name="project" list="project-names" maxlength="80" placeholder="比如：旅行短片 / 客户宣传片" autocomplete="off"></label><label class="field">剪辑阶段<select id="task-stage" name="stage"><option value="">暂不设置</option><option>前期沟通</option><option>拍摄</option><option>素材整理</option><option>粗剪</option><option>精剪</option><option>包装</option><option>字幕</option><option>调色</option><option>导出</option><option>项目备份</option><option>字幕调色</option><option>导出交付</option></select></label></div><div class="task-copy-hint" id="task-copy-hint" hidden><span id="task-copy-text" role="status"></span><button type="button" class="text-button" id="use-copy-suggestion">使用下一版</button></div><p class="task-dialog-hint">项目名和阶段会一起记在待办里，方便继续上次的进度。</p></div><div class="field-row"><label class="field">开始时间 · 可不填<input type="time" id="task-time" name="time"></label><label class="field">预计用时<select id="task-duration" name="duration"><option value="15">15 分钟</option><option value="30" selected>30 分钟</option><option value="45">45 分钟</option><option value="60">1 小时</option><option value="90">1.5 小时</option><option value="120">2 小时</option></select></label></div><label class="field">补充几句 · 可不填<textarea id="task-note" name="note" maxlength="500" placeholder="让开始变得更容易一点…"></textarea></label><label class="field-checkbox"><input type="checkbox" id="task-important" name="important">这是今天重要的事</label></div><footer class="dialog-footer"><button type="button" class="delete-task" id="delete-task" hidden>删除任务</button><button type="button" class="subtle-button" data-close="task-dialog">取消</button><button type="submit" class="primary" id="save-task">添加任务</button></footer></form></dialog>
-<dialog id="backup-dialog" aria-labelledby="backup-title"><header class="dialog-header"><h2 id="backup-title">留住你的日常</h2><button class="icon-button" data-close="backup-dialog" aria-label="关闭数据与备份"><span data-icon="x"></span></button></header><div class="dialog-body"><p class="dialog-description">计划、小记和习惯保存在当前浏览器中。清除浏览器数据或换个设备时不会自动同步，可以导出一份备份，随时带走。</p><div class="backup-option"><span data-icon="download"></span><div><strong>导出全部记录</strong><p>保存为备份文件，留一份安心。</p></div><button class="subtle-button" id="export-data">导出</button></div><div class="backup-option"><span data-icon="upload"></span><div><strong>从备份恢复</strong><p>恢复前会再次确认，将替换当前记录。</p></div><button class="subtle-button" id="import-data">导入</button><input type="file" id="import-file" accept=".json,application/json" hidden></div><p class="dialog-description" id="backup-stats" style="margin:19px 0 0"></p><p id="import-feedback" class="import-feedback" role="status"></p></div></dialog>
+<dialog id="task-dialog" aria-labelledby="task-dialog-title"><form id="task-form"><header class="dialog-header"><h2 id="task-dialog-title">记下一件小事</h2><button type="button" class="icon-button" data-close="task-dialog" aria-label="关闭任务编辑"><span data-icon="x"></span></button></header><div class="dialog-body"><label class="field">想做什么<input id="task-title" name="title" maxlength="120" required placeholder="比如，读完一直想看的那本书" autocomplete="off"></label><div class="field-row"><label class="field">安排在哪一天<input type="date" id="task-date" name="date" required></label><label class="field">分类<select id="task-category" name="category"><option>生活</option><option>工作</option><option>剪辑</option><option>学习</option></select></label></div><div class="editing-fields" id="editing-fields" hidden><div class="field-row"><label class="field">所属项目 · 可不填<input id="task-project" name="project" list="project-names" maxlength="80" placeholder="比如：旅行短片 / 客户宣传片" autocomplete="off"></label><label class="field">剪辑阶段<select id="task-stage" name="stage"><option value="">暂不设置</option><option>前期沟通</option><option>拍摄</option><option>素材整理</option><option>粗剪</option><option>精剪</option><option>包装</option><option>字幕</option><option>调色</option><option>导出</option><option>项目备份</option><option>字幕调色</option><option>导出交付</option></select></label></div><div class="task-copy-hint" id="task-copy-hint" hidden><span id="task-copy-text" role="status"></span><button type="button" class="text-button" id="use-copy-suggestion">使用下一版</button></div><p class="task-dialog-hint">项目名和阶段会一起记在待办里，方便继续上次的进度。</p></div><div class="field-row"><label class="field">开始时间 · 可不填<input type="time" id="task-time" name="time" step="60" aria-describedby="task-time-summary"></label><label class="field">结束时间 · 可不填<input type="time" id="task-end" name="end" step="60" aria-describedby="task-time-summary"></label></div><label class="field-checkbox"><input type="checkbox" id="task-next-day" name="nextDay">结束于次日</label><p class="task-dialog-hint" id="task-time-summary" role="status" aria-live="polite">填写开始和结束时间后，自动计算用时；也可以都不填。</p><input type="hidden" id="task-duration" name="duration" value="30"><label class="field">补充几句 · 可不填<textarea id="task-note" name="note" maxlength="500" placeholder="让开始变得更容易一点…"></textarea></label><label class="field-checkbox"><input type="checkbox" id="task-important" name="important">这是今天重要的事</label></div><footer class="dialog-footer"><button type="button" class="delete-task" id="delete-task" hidden>删除任务</button><button type="button" class="subtle-button" data-close="task-dialog">取消</button><button type="submit" class="primary" id="save-task">添加任务</button></footer></form></dialog>
+<dialog id="backup-dialog" aria-labelledby="backup-title"><header class="dialog-header"><h2 id="backup-title">留住你的日常</h2><button class="icon-button" data-close="backup-dialog" aria-label="关闭数据与备份"><span data-icon="x"></span></button></header><div class="dialog-body"><p class="dialog-description">记录由云端服务保存到 GitHub 私有仓库，无需保持电脑开机。浏览器只保留设备识别信息。也可以导出一份备份文件。</p><div class="backup-option"><span data-icon="download"></span><div><strong>导出全部记录</strong><p>保存为备份文件，留一份安心。</p></div><button class="subtle-button" id="export-data">导出</button></div><div class="backup-option"><span data-icon="upload"></span><div><strong>从备份恢复</strong><p>恢复前会再次确认，将替换当前记录。</p></div><button class="subtle-button" id="import-data">导入</button><input type="file" id="import-file" accept=".json,application/json" hidden></div><p class="dialog-description" id="backup-stats" style="margin:19px 0 0"></p><p id="import-feedback" class="import-feedback" role="status"></p></div></dialog>
 <dialog id="habits-dialog" aria-labelledby="habits-title"><form id="habits-form"><header class="dialog-header"><h2 id="habits-title">我的三个小习惯</h2><button type="button" class="icon-button" data-close="habits-dialog" aria-label="关闭习惯编辑"><span data-icon="x"></span></button></header><div class="dialog-body"><p class="dialog-description">从容易做到的小事开始。修改名称会沿用这个习惯已有的打卡记录。</p><div id="habit-editor"></div></div><footer class="dialog-footer"><button type="button" class="subtle-button" data-close="habits-dialog">取消</button><button class="primary" type="submit">保存习惯</button></footer></form></dialog>
 <dialog id="confirm-dialog" aria-labelledby="confirm-title"><header class="dialog-header"><h2 id="confirm-title">确认操作</h2><button class="icon-button" data-close="confirm-dialog" aria-label="取消操作"><span data-icon="x"></span></button></header><div class="dialog-body"><p id="confirm-message" class="confirmation-text"></p></div><footer class="dialog-footer"><button class="subtle-button" data-close="confirm-dialog">取消</button><button class="primary" id="confirm-action">确认</button></footer></dialog>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
@@ -119,7 +138,7 @@ const addDays=(key,n)=>{const d=parseDate(key);d.setDate(d.getDate()+n);return d
 const startOfWeek=key=>addDays(key,-((parseDate(key).getDay()+6)%7));
 const uid=()=>globalThis.crypto?.randomUUID?.()||'id-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2);
 const weekLabels=['一','二','三','四','五','六','日'];
-const STORAGE_KEY='daynote.v2';
+
 const HABIT_ICONS=['water','book','walk'];
 const EDITING_STAGES = [
   {stage:'前期沟通',group:'前期',title:'确认需求与制作计划',duration:60,note:'确认目的、受众、参考风格、片长画幅、交付规格、预算与时间节点，记录需要客户提供的资料。'},
@@ -174,7 +193,7 @@ function attendanceIntervals(entry){return entry.segments.length?entry.segments:
 function entryWorkMinutes(entry){const span=attendanceIntervals(entry).reduce((sum,s)=>sum+timestampMinutes(s.end)-timestampMinutes(s.start),0);return Math.max(0,span-entry.breakMinutes)}
 function entryOvertimeMinutes(entry,profile){
   if(!entry.count||!['normal','overtime'].includes(entry.type))return 0;
-  if(isWeekend(entry.date))return entryWorkMinutes(entry);
+  if(isWeekend(entry.date)&&!isScheduledWorkday(entry.date,profile))return entryWorkMinutes(entry);
   const cutoff=timestampMinutes(entry.date+'T'+profile.workEnd);
   const late=attendanceIntervals(entry).reduce((sum,s)=>sum+Math.max(0,timestampMinutes(s.end)-Math.max(timestampMinutes(s.start),cutoff)),0);
   return Math.min(entryWorkMinutes(entry),Math.max(0,late-(entry.overtimeBreakMinutes||0)));
@@ -195,7 +214,7 @@ function attendanceSummary(attendance,asOf=today()){
     if(entry?.count){if(['normal','overtime'].includes(entry.type))attended=entry.days;else if(['timeoff','sick','leave'].includes(entry.type))attended=Math.max(0,base-entry.days);else if(entry.type==='rest')attended=0}
     estimatedDays+=attended;
   }
-  entries.filter(e=>e.count).forEach(e=>{if(['normal','overtime'].includes(e.type)){recordedDays+=e.days;overtimeMinutes+=entryOvertimeMinutes(e,profile)}if(e.type==='overtime'&&isWeekend(e.date)){overtimeDays+=e.days;if(e.approval==='pending')pendingDays+=e.days}if(e.type==='timeoff')timeoffDays+=e.days;if(['sick','leave'].includes(e.type))otherLeaveDays+=e.days});
+  entries.filter(e=>e.count).forEach(e=>{if(['normal','overtime'].includes(e.type)){recordedDays+=e.days;overtimeMinutes+=entryOvertimeMinutes(e,profile)}if(e.type==='overtime'&&isWeekend(e.date)&&!isScheduledWorkday(e.date,profile)){overtimeDays+=e.days;if(e.approval==='pending')pendingDays+=e.days}if(e.type==='timeoff')timeoffDays+=e.days;if(['sick','leave'].includes(e.type))otherLeaveDays+=e.days});
   return {scheduledDays,estimatedDays,recordedDays,overtimeDays,timeoffDays,otherLeaveDays,overtimeMinutes,pendingDays,balance:Math.round((profile.openingBalance+overtimeDays*profile.creditPerDay-timeoffDays)*100)/100};
 }
 function validateAttendance(raw){
@@ -231,19 +250,18 @@ function validateStore(raw){
   if(!raw||raw.version!==1||!Array.isArray(raw.tasks)||raw.tasks.length>20000||!raw.days||typeof raw.days!=='object'||Array.isArray(raw.days)||!Array.isArray(raw.habits)||raw.habits.length!==3)throw Error('这不是有效的日序备份文件。');
   const value=emptyStore(),ids=new Set();
   value.habits=raw.habits.map((h,i)=>{if(!h||typeof h.id!=='string'||!(/^[a-zA-Z0-9_-]{1,80}$/).test(h.id)||typeof h.name!=='string'||!h.name.trim()||h.name.length>30||ids.has(h.id))throw Error('备份中的习惯数据不完整。');ids.add(h.id);return{id:h.id,name:h.name.trim(),icon:HABIT_ICONS[i]}});
-  ids.clear();value.tasks=raw.tasks.map(t=>{if(!t||typeof t.id!=='string'||!(/^[a-zA-Z0-9_-]{1,100}$/).test(t.id)||ids.has(t.id)||typeof t.title!=='string'||!t.title.trim()||t.title.length>120||!validDate(t.date)||!['生活','工作','学习','剪辑'].includes(t.category)||typeof t.time!=='string'||(t.time&&!/^([01]\d|2[0-3]):[0-5]\d$/.test(t.time))||![15,30,45,60,90,120].includes(t.duration)||typeof t.done!=='boolean'||typeof t.important!=='boolean'||typeof t.note!=='string'||t.note.length>500||typeof(t.project??'')!=='string'||(t.project??'').length>80||typeof(t.stage??'')!=='string'||((t.stage??'')!==''&&!isEditingStage(t.stage)))throw Error('备份中的任务数据不完整。');ids.add(t.id);return{id:t.id,title:t.title.trim(),date:t.date,category:t.category,time:t.time,duration:t.duration,done:t.done,important:t.important,note:t.note,project:t.project??'',stage:t.stage??'',sample:t.sample===true}});
+  ids.clear();value.tasks=raw.tasks.map(t=>{if(!t||typeof t.id!=='string'||!(/^[a-zA-Z0-9_-]{1,100}$/).test(t.id)||ids.has(t.id)||typeof t.title!=='string'||!t.title.trim()||t.title.length>120||!validDate(t.date)||!['生活','工作','学习','剪辑'].includes(t.category)||typeof t.time!=='string'||(t.time&&!/^([01]\d|2[0-3]):[0-5]\d$/.test(t.time))||(!Number.isInteger(t.duration)||t.duration<1||t.duration>1440)||typeof t.done!=='boolean'||typeof t.important!=='boolean'||typeof t.note!=='string'||t.note.length>500||typeof(t.project??'')!=='string'||(t.project??'').length>80||typeof(t.stage??'')!=='string'||((t.stage??'')!==''&&!isEditingStage(t.stage)))throw Error('备份中的任务数据不完整。');ids.add(t.id);return{id:t.id,title:t.title.trim(),date:t.date,category:t.category,time:t.time,duration:t.duration,done:t.done,important:t.important,note:t.note,project:t.project??'',stage:t.stage??'',sample:t.sample===true}});
   const entries=Object.entries(raw.days);if(entries.length>40000)throw Error('备份包含过多日期。');for(const [key,d]of entries){if(!validDate(key)||!d||typeof d.note!=='string'||d.note.length>2000||!Number.isInteger(d.mood)||d.mood<0||d.mood>4||!Array.isArray(d.habits)||d.habits.some(id=>!value.habits.some(h=>h.id===id)))throw Error('备份中的日常记录不完整。');value.days[key]={note:d.note,mood:d.mood,habits:[...new Set(d.habits)]}}
   return validateWorkspace(raw,value);
 }
-let store,storageBlocked=false,corruptRaw=null;
-try{const current=localStorage.getItem(STORAGE_KEY),raw=current??localStorage.getItem('daynote.v1');if(raw===null){store=initialStore()}else{try{store=validateStore(JSON.parse(raw))}catch(error){store=emptyStore();storageBlocked=true;corruptRaw=raw}}if(current===null&&corruptRaw===null)localStorage.setItem(STORAGE_KEY,JSON.stringify(store))}catch(error){store=store||initialStore();storageBlocked=true}
+let store=emptyStore(),storageBlocked=false,corruptRaw=null;
 let selected=today(),weekStart=startOfWeek(selected),view='projects',filter='all',category='all',onlyImportant=false,editingId=null;
 const dayRecord=(key=selected)=>store.days[key]||{note:'',mood:0,habits:[]};
 function mutableDay(key=selected){return store.days[key]||(store.days[key]={note:'',mood:0,habits:[]})}
 function warning(message){$('#storage-warning').hidden=false;$('#storage-warning').textContent=message;$('#save-state').textContent='尚未保存';$('#save-state').classList.add('warning')}
-function persist(){if(corruptRaw!==null){warning('已有记录暂时无法读取，原始内容已保留。新内容暂存于本页，请先导出备份；刷新前可在「数据与备份」中恢复有效文件。');return false}try{localStorage.setItem(STORAGE_KEY,JSON.stringify(store));storageBlocked=false;$('#storage-warning').hidden=true;$('#save-state').textContent='已保存在此浏览器';$('#save-state').classList.remove('warning');return true}catch(error){storageBlocked=true;warning('浏览器暂时无法保存。当前记录仍可使用，请在刷新前通过「数据与备份」导出。');return false}}
+function persist(){return queueCloudSave()}
 let toastTimeout,undoAction;
-function toast(message,undo){clearTimeout(toastTimeout);undoAction=undo;$('#toast').innerHTML=escapeHTML(message)+(undo?'<button id="undo-action">撤销</button>':'');$('#toast').classList.add('show');if(undo)$('#undo-action').onclick=()=>{const action=undoAction;undoAction=null;action?.();$('#toast').classList.remove('show')};toastTimeout=setTimeout(()=>{$('#toast').classList.remove('show');undoAction=null},undo?6500:3300)}
+function toast(message,undo){clearTimeout(toastTimeout);undoAction=undo;$('#toast').innerHTML=escapeHTML(message)+(undo?'<button id="undo-action">撤销</button>':'');$('#toast').classList.add('show');if(undo)$('#undo-action').onclick=()=>{const action=undoAction;undoAction=null;action?.();$('#toast').classList.remove('show')};toastTimeout=setTimeout(()=>{$('#toast').classList.remove('show');undoAction=null},undo?15000:3300)}
 const categoryClass=c=>c==='剪辑'?'editing':c==='工作'?'work':c==='学习'?'study':'life';
 const taskIsVisible=t=>!t.projectId||!store.projects.find(p=>p.id===t.projectId)?.archived;
 const tasksFor=key=>store.tasks.filter(t=>t.date===key&&taskIsVisible(t));
@@ -260,7 +278,7 @@ function face(mood){const mouth=['M7 16c3-3 7-3 10 0','M8 15h8','M7 14c3 4 7 4 1
 function renderEditingWorkbench(){
   const tasks=tasksFor(selected).filter(t=>t.category==='剪辑'),done=tasks.filter(t=>t.done).length;
   $('#editor-progress').textContent=tasks.length?'剪辑任务 '+done+' / '+tasks.length+' 已完成':'还没安排剪辑任务';
-  $('#editing-stages').innerHTML=EDITING_STAGES.map((template,index)=>{const matches=tasks.filter(t=>t.stage===template.stage),completed=matches.filter(t=>t.done).length,finished=matches.length>0&&completed===matches.length;return '<button class="stage-button '+(finished?'is-finished':'')+'" data-editor-template="'+index+'" aria-label="添加剪辑任务：'+template.stage+'"><span class="stage-number">'+(finished?icon('check'):String(index+1).padStart(2,'0'))+'</span><span><strong>'+template.stage+'</strong><small>'+(matches.length?completed+' / '+matches.length+' 已完成':'约 '+template.duration+' 分钟')+'</small></span></button>'}).join('');
+  $('#editing-stages').innerHTML=EDITING_STAGES.map((template,index)=>{const matches=tasks.filter(t=>t.stage===template.stage),completed=matches.filter(t=>t.done).length,finished=matches.length>0&&completed===matches.length;return '<button class="stage-button '+(finished?'is-finished':'')+'" data-editor-template="'+index+'" aria-label="添加剪辑任务：'+template.stage+'"><span class="stage-number">'+(finished?icon('check'):String(index+1).padStart(2,'0'))+'</span><span><strong>'+template.stage+'</strong>'+(matches.length?'<small>'+completed+' / '+matches.length+' 已完成</small>':'')+'</span></button>'}).join('');
 }
 function renderJournal(){const rec=dayRecord();$('#journal').value=rec.note;$('#note-count').textContent=rec.note.length+' / 2000';$('#mood-buttons').innerHTML=['有点低落','平平淡淡','心情不错','非常开心'].map((name,i)=>'<button class="mood-button '+(rec.mood===i+1?'selected':'')+'" data-mood="'+(i+1)+'" aria-label="'+name+'" title="'+name+'" aria-pressed="'+(rec.mood===i+1)+'">'+face(i+1)+'</button>').join('')}
 function renderHabits(){const rec=dayRecord();$('#habit-count').textContent=rec.habits.length+' / 3';$('#habit-list').innerHTML=store.habits.map(h=>'<div class="habit-row"><span class="habit-label">'+icon(h.icon)+escapeHTML(h.name)+'</span><button class="habit-check '+(rec.habits.includes(h.id)?'complete':'')+'" data-habit="'+h.id+'" data-habit-date="'+selected+'" aria-label="'+escapeHTML(h.name)+'" aria-pressed="'+rec.habits.includes(h.id)+'">'+icon('check')+'</button></div>').join('')}
@@ -287,7 +305,6 @@ function updateTimer(){if(timerRunning){remaining=Math.max(0,Math.ceil((deadline
 function toggleTimer(){if(timerRunning){remaining=Math.max(0,Math.ceil((deadline-Date.now())/1000));timerRunning=false;deadline=null}else{if(remaining===0)remaining=timerMode*60;deadline=Date.now()+remaining*1000;timerRunning=true}updateTimer()}
 function resetTimer(){timerRunning=false;deadline=null;remaining=timerMode*60;$('#timer-announcement').textContent='计时器已重置。';updateTimer()}
 $('#timer-toggle').onclick=toggleTimer;$('#mobile-timer-toggle').onclick=toggleTimer;$('#timer-reset').onclick=resetTimer;$('#mobile-timer-reset').onclick=resetTimer;$('#focus-mode').onchange=e=>{timerMode=Number(e.target.value);resetTimer()};setInterval(updateTimer,500);document.addEventListener('visibilitychange',updateTimer);
-window.addEventListener('storage',event=>{if(event.key!==STORAGE_KEY)return;try{if(event.newValue){store=validateStore(JSON.parse(event.newValue));corruptRaw=null;storageBlocked=false;render();toast('已同步同一浏览器中的更新。')}else warning('其他页面清除了记录。本页仍保留当前内容，可先导出备份。')}catch(error){warning('其他页面的记录暂时无法读取，请先导出当前备份。')}});
 function projectStatuses(){return {planning:'筹备中',active:'进行中',feedback:'待反馈',paused:'已暂停',done:'已完成'}}
 function projectStages(){return [...EDITING_STAGES.map(s=>s.stage),'审片反馈','已交付',...LEGACY_EDITING_STAGES]}
 function localTimestamp(){const now=new Date();return dateKey(now)+'T'+String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0')}
@@ -295,13 +312,20 @@ function isTime(text){return typeof text==='string'&&/^([01]\d|2[0-3]):[0-5]\d$/
 function isTimestamp(text){return typeof text==='string'&&text.length===16&&validDate(text.slice(0,10))&&text[10]==='T'&&isTime(text.slice(11))}
 function isId(value){return typeof value==='string'&&/^[a-zA-Z0-9_-]{1,100}$/.test(value)}
 function isText(value,max,required=false){return typeof value==='string'&&value.length<=max&&(!required||!!value.trim())}
+function validateProjectSpecs(raw){
+  if(raw===undefined)return undefined;
+  if(!raw||typeof raw!=='object'||Array.isArray(raw))throw Error('项目规格格式不正确。');
+  const specs={resolution:raw.resolution??'',frameRate:raw.frameRate??'',runtime:raw.runtime??'',remarks:raw.remarks??''};
+  if(!isText(specs.resolution,60)||!isText(specs.frameRate,20)||!isText(specs.runtime,60)||!isText(specs.remarks,1500)||(specs.frameRate!==''&&(!Number.isFinite(Number(specs.frameRate))||Number(specs.frameRate)<1||Number(specs.frameRate)>1000)))throw Error('请检查项目分辨率、帧率、时长或备注。');
+  return specs;
+}
 function validateWorkspace(raw,value){
   for(const key of ['projects','updates','logs'])if(raw[key]!==undefined&&(!Array.isArray(raw[key])||raw[key].length>40000))throw Error('项目或工作日志的备份格式不正确。');
   const projectIds=new Set(),recordIds=new Set();
   value.projects=(raw.projects||[]).map(p=>{
     if(!p||!isId(p.id)||projectIds.has(p.id)||!isText(p.name,80,true)||!isText(p.brief,1500)||!(p.start===''||validDate(p.start))||(p.due!==''&&(!validDate(p.due)||p.due<p.start))||!Object.hasOwn(projectStatuses(),p.status)||!Number.isInteger(p.progress)||p.progress<0||p.progress>100||!projectStages().includes(p.stage)||!Array.isArray(p.members)||p.members.length<1||p.members.length>30||!isTimestamp(p.createdAt)||!isTimestamp(p.updatedAt))throw Error('备份中的项目资料不完整。');
     const peopleIds=new Set();const members=p.members.map(m=>{if(!m||!isId(m.id)||peopleIds.has(m.id)||!isText(m.name,40,true)||!isText(m.role,40))throw Error('备份中的参与人员不完整。');peopleIds.add(m.id);return {id:m.id,name:m.name.trim(),role:m.role.trim()}});
-    projectIds.add(p.id);return {id:p.id,name:p.name.trim(),brief:p.brief,start:p.start,due:p.due,status:p.status,progress:p.progress,stage:p.stage,members,createdAt:p.createdAt,updatedAt:p.updatedAt,archived:p.archived===true,sample:p.sample===true};
+    const specs=validateProjectSpecs(p.specs);projectIds.add(p.id);return {...(specs?{specs}:{}),id:p.id,name:p.name.trim(),brief:p.brief,start:p.start,due:p.due,status:p.status,progress:p.progress,stage:p.stage,members,createdAt:p.createdAt,updatedAt:p.updatedAt,archived:p.archived===true,sample:p.sample===true};
   });
   value.updates=(raw.updates||[]).map(u=>{
     if(!u||!isId(u.id)||recordIds.has(u.id)||!projectIds.has(u.projectId)||!isTimestamp(u.at)||!Object.hasOwn(projectStatuses(),u.status)||!Number.isInteger(u.progress)||u.progress<0||u.progress>100||(u.status==='done'&&u.progress!==100)||!projectStages().includes(u.stage)||!isText(u.summary,1500,true)||!isText(u.next,300)||!isText(u.author,40,true)||!isTimestamp(u.createdAt))throw Error('备份中的进度更新不完整。');
@@ -355,7 +379,7 @@ let projectQuery='',projectStatusFilter='all',logProjectFilter='all',logDateFilt
 
 function projectCard(p){
   const s=projectState(p),done=s.status==='done',overdue=p.due&&p.due<today()&&!done;
-  return '<article class="card project-card '+(done?'done-project':'')+'" data-project-card="'+p.id+'"><div class="project-card-top"><span>'+statusPill(s.status)+(p.sample?'<span class="sample-tag">示例项目</span>':'')+'</span><span class="due-label '+(overdue?'overdue':'')+'">'+projectDue(p)+'</span></div><button class="project-card-title" data-open-project="'+p.id+'">'+escapeHTML(p.name)+'</button><p class="project-brief">'+escapeHTML(p.brief||'还没写项目说明，随时补充你的想法。')+'</p><div><div class="project-progress-line"><span>'+escapeHTML(s.stage)+'</span><span>'+s.progress+'%</span></div><div class="progress-track" role="progressbar" aria-label="'+escapeHTML(p.name)+'整体进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+s.progress+'"><div class="progress-fill" style="width:'+s.progress+'%"></div></div></div><div class="project-date-line"><span>开始 '+(p.start?shortDate(p.start):'待补充')+'</span><span>交付 '+(p.due?shortDate(p.due):'待定')+'</span></div><p class="project-card-latest">'+escapeHTML(s.summary)+'</p><div class="project-card-footer">'+peopleStack(p)+'<div class="project-card-actions"><button class="text-button" data-project-update="'+p.id+'">更新进度</button><button class="text-button" data-log-project="'+p.id+'">记录工作</button><button class="text-button" data-archive-project="'+p.id+'">'+(p.archived?'恢复':'归档')+'</button>'+(done?'':'<button class="text-button" data-finish-project="'+p.id+'" aria-label="完成项目：'+escapeHTML(p.name)+'">'+icon('check')+'完成</button>')+'<button class="icon-button" data-open-project="'+p.id+'" aria-label="查看项目：'+escapeHTML(p.name)+'">'+icon('chevron-right')+'</button></div></div><details class="project-inline-tasks"><summary>项目任务 · '+projectTasks(p.id).filter(t=>t.done).length+' / '+projectTasks(p.id).length+'</summary>'+projectTasks(p.id).map(t=>'<div class="project-task-row '+(t.done?'done':'')+'"><button class="task-check" data-complete="'+t.id+'" aria-label="'+(t.done?'取消完成：':'完成：')+escapeHTML(t.title)+'">'+icon('check')+'</button><button class="task-name" data-edit="'+t.id+'">'+escapeHTML(t.title)+'</button></div>').join('')+renderProjectTaskTools(p)+'</details></article>';
+  return '<article class="card project-card '+(done?'done-project':'')+'" data-project-card="'+p.id+'"><div class="project-card-top"><span>'+statusPill(s.status)+(p.sample?'<span class="sample-tag">示例项目</span>':'')+'</span><span class="due-label '+(overdue?'overdue':'')+'">'+projectDue(p)+'</span></div><button class="project-card-title" data-open-project="'+p.id+'">'+escapeHTML(p.name)+'</button><p class="project-brief">'+escapeHTML(p.brief||'还没写项目说明，随时补充你的想法。')+'</p>'+projectSpecsMarkup(p)+'<div><div class="project-progress-line"><span>'+escapeHTML(s.stage)+'</span><span>'+s.progress+'%</span></div><div class="progress-track" role="progressbar" aria-label="'+escapeHTML(p.name)+'整体进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+s.progress+'"><div class="progress-fill" style="width:'+s.progress+'%"></div></div></div><div class="project-date-line"><span>开始 '+(p.start?shortDate(p.start):'待补充')+'</span><span>交付 '+(p.due?shortDate(p.due):'待定')+'</span></div><p class="project-card-latest">'+escapeHTML(s.summary)+'</p><div class="project-card-footer">'+peopleStack(p)+'<div class="project-card-actions"><button class="text-button" data-project-update="'+p.id+'">更新进度</button><button class="text-button" data-log-project="'+p.id+'">记录工作</button><button class="text-button" data-archive-project="'+p.id+'">'+(p.archived?'恢复':'归档')+'</button>'+(done?'':'<button class="text-button" data-finish-project="'+p.id+'" aria-label="完成项目：'+escapeHTML(p.name)+'">'+icon('check')+'完成</button>')+'<button class="icon-button" data-open-project="'+p.id+'" aria-label="查看项目：'+escapeHTML(p.name)+'">'+icon('chevron-right')+'</button></div></div><details class="project-inline-tasks"><summary>项目任务 · '+projectTasks(p.id).filter(t=>t.done).length+' / '+projectTasks(p.id).length+'</summary>'+projectTasks(p.id).map(t=>'<div class="project-task-row '+(t.done?'done':'')+'"><button class="task-check" data-complete="'+t.id+'" aria-label="'+(t.done?'取消完成：':'完成：')+escapeHTML(t.title)+'">'+icon('check')+'</button><button class="task-name" data-edit="'+t.id+'">'+escapeHTML(t.title)+'</button></div>').join('')+renderProjectTaskTools(p)+'</details></article>';
 }
 function renderProjects(){
   const active=store.projects.filter(p=>!p.archived),unfinished=active.filter(p=>projectState(p).status!=='done');
@@ -373,7 +397,7 @@ function renderProjectDetail(){
   const s=projectState(p),tasks=projectTasks(p.id),logs=store.logs.filter(l=>l.projectId===p.id),minutes=logs.reduce((sum,l)=>sum+logMinutes(l),0);
   const events=[...projectUpdates(p.id).map(u=>({at:u.at,kind:'update',entry:u})),...logs.map(l=>({at:l.date+'T'+l.start,kind:'log',entry:l}))].sort((a,b)=>b.at.localeCompare(a.at));
   const eventHTML=events.length?events.map(event=>{const item=event.entry;return '<article class="activity-row '+(event.kind==='log'?'work-record':'')+'"><div class="activity-meta"><span>'+escapeHTML(event.at.replace('T',' '))+'</span><span class="activity-type">'+(event.kind==='log'?'工作记录':'进度更新')+'</span></div><h3>'+(event.kind==='log'?escapeHTML(item.person)+' · '+item.start+'–'+logEndLabel(item)+' · '+hoursLabel(logMinutes(item)):escapeHTML(item.author)+' · '+escapeHTML(item.stage)+' · '+item.progress+'%')+'</h3><p>'+escapeHTML(event.kind==='log'?item.content:item.summary)+'</p>'+(item.next?'<p>接下来：'+escapeHTML(item.next)+'</p>':'')+(event.kind==='log'?'<button class="text-button" data-edit-log="'+item.id+'">编辑记录</button>':'')+'</article>'}).join(''):'<div class="project-task-empty">还没有动态。更新一次进度，或记下刚刚完成的工作。</div>';
-  $('#project-detail').innerHTML='<div class="detail-topline"><button class="text-button" data-projects-home="true">'+icon('chevron-left')+'项目总览</button><div><button class="subtle-button" data-edit-project="'+p.id+'">编辑资料</button><button class="subtle-button" data-archive-project="'+p.id+'">'+(p.archived?'恢复项目':'归档')+'</button><button class="subtle-button" data-log-project="'+p.id+'">记录工作</button><button class="primary" data-project-update="'+p.id+'">更新进度</button></div></div><div class="detail-grid"><div class="detail-primary"><section class="card detail-summary">'+statusPill(s.status)+(p.archived?'<span class="sample-tag">已归档</span>':'')+(p.sample?'<span class="sample-tag">示例项目</span>':'')+'<h2>'+escapeHTML(p.name)+'</h2><p>'+escapeHTML(p.brief||'为这个项目补充一些说明吧。')+'</p><div class="detail-dates"><div><span>开始日期</span><strong>'+(p.start||'待补充')+'</strong></div><div><span>预计交付</span><strong>'+(p.due||'待定')+'</strong></div><div><span>已记录工作</span><strong>'+hoursLabel(minutes)+'</strong></div></div><div class="detail-progress"><div class="project-progress-line"><span>'+escapeHTML(s.stage)+' · 整体进度</span><span>'+s.progress+'%</span></div><div class="progress-track"><div class="progress-fill" style="width:'+s.progress+'%"></div></div></div><p class="project-latest-next" style="margin-top:18px">最新：'+escapeHTML(s.summary)+'</p>'+(s.next?'<p class="project-latest-next">下一步：'+escapeHTML(s.next)+'</p>':'')+'</section><section class="card"><header class="card-heading"><h2>项目动态</h2><span class="counter">'+events.length+'</span></header><div class="activity-list">'+eventHTML+'</div></section></div><div class="detail-secondary"><section class="card"><header class="card-heading"><h2>一起做这件事的人</h2><span class="counter">'+p.members.length+'</span></header><div class="section-content">'+p.members.map(m=>'<div class="member-row"><span class="member-avatar">'+escapeHTML(m.name.slice(0,1))+'</span><div class="member-info"><strong>'+escapeHTML(m.name)+'</strong><p>'+escapeHTML(m.role||'分工待补充')+'</p></div></div>').join('')+'</div></section><section class="card"><header class="card-heading"><h2>项目任务</h2><span class="counter">'+tasks.filter(t=>t.done).length+' / '+tasks.length+'</span></header><div class="section-content">'+(tasks.length?[...tasks].sort((a,b)=>Number(a.done)-Number(b.done)||a.date.localeCompare(b.date)).map(t=>'<div class="project-task-row '+(t.done?'done':'')+'"><button class="task-check" data-complete="'+t.id+'" aria-label="'+(t.done?'取消完成：':'完成：')+escapeHTML(t.title)+'" aria-pressed="'+t.done+'">'+icon('check')+'</button><div><button class="task-name" data-edit="'+t.id+'">'+escapeHTML(t.title)+'</button><p>'+shortDate(t.date)+(t.time?' · '+t.time:'')+(t.stage?' · '+escapeHTML(t.stage):'')+'</p></div></div>').join(''):'<p class="project-task-empty">把下一步拆成一件小事，安排进日常。</p>')+'</div>'+renderProjectTaskTools(p)+'</section></div></div>';
+  $('#project-detail').innerHTML='<div class="detail-topline"><button class="text-button" data-projects-home="true">'+icon('chevron-left')+'项目总览</button><div><button class="subtle-button" data-edit-project="'+p.id+'">编辑资料</button><button class="subtle-button" data-archive-project="'+p.id+'">'+(p.archived?'恢复项目':'归档')+'</button><button class="subtle-button" data-log-project="'+p.id+'">记录工作</button><button class="primary" data-project-update="'+p.id+'">更新进度</button></div></div><div class="detail-grid"><div class="detail-primary"><section class="card detail-summary">'+statusPill(s.status)+(p.archived?'<span class="sample-tag">已归档</span>':'')+(p.sample?'<span class="sample-tag">示例项目</span>':'')+'<h2>'+escapeHTML(p.name)+'</h2><p>'+escapeHTML(p.brief||'为这个项目补充一些说明吧。')+'</p>'+projectSpecsMarkup(p,true)+'<div class="detail-dates"><div><span>开始日期</span><strong>'+(p.start||'待补充')+'</strong></div><div><span>预计交付</span><strong>'+(p.due||'待定')+'</strong></div><div><span>已记录工作</span><strong>'+hoursLabel(minutes)+'</strong></div></div><div class="detail-progress"><div class="project-progress-line"><span>'+escapeHTML(s.stage)+' · 整体进度</span><span>'+s.progress+'%</span></div><div class="progress-track"><div class="progress-fill" style="width:'+s.progress+'%"></div></div></div><p class="project-latest-next" style="margin-top:18px">最新：'+escapeHTML(s.summary)+'</p>'+(s.next?'<p class="project-latest-next">下一步：'+escapeHTML(s.next)+'</p>':'')+'</section><section class="card"><header class="card-heading"><h2>项目动态</h2><span class="counter">'+events.length+'</span></header><div class="activity-list">'+eventHTML+'</div></section></div><div class="detail-secondary"><section class="card"><header class="card-heading"><h2>一起做这件事的人</h2><span class="counter">'+p.members.length+'</span></header><div class="section-content">'+p.members.map(m=>'<div class="member-row"><span class="member-avatar">'+escapeHTML(m.name.slice(0,1))+'</span><div class="member-info"><strong>'+escapeHTML(m.name)+'</strong><p>'+escapeHTML(m.role||'分工待补充')+'</p></div></div>').join('')+'</div></section><section class="card"><header class="card-heading"><h2>项目任务</h2><span class="counter">'+tasks.filter(t=>t.done).length+' / '+tasks.length+'</span></header><div class="section-content">'+(tasks.length?[...tasks].sort((a,b)=>Number(a.done)-Number(b.done)||a.date.localeCompare(b.date)).map(t=>'<div class="project-task-row '+(t.done?'done':'')+'"><button class="task-check" data-complete="'+t.id+'" aria-label="'+(t.done?'取消完成：':'完成：')+escapeHTML(t.title)+'" aria-pressed="'+t.done+'">'+icon('check')+'</button><div><button class="task-name" data-edit="'+t.id+'">'+escapeHTML(t.title)+'</button><p>'+shortDate(t.date)+(t.time?' · '+t.time:'')+(t.stage?' · '+escapeHTML(t.stage):'')+'</p></div></div>').join(''):'<p class="project-task-empty">把下一步拆成一件小事，安排进日常。</p>')+'</div>'+renderProjectTaskTools(p)+'</section></div></div>';
 }
 function logEntry(log){const p=getProject(log.projectId);return '<article class="log-entry"><div class="log-hours">'+log.start+' – '+logEndLabel(log)+'<small>'+hoursLabel(logMinutes(log))+'</small></div><div class="log-body"><h3>'+escapeHTML(log.stage)+' · '+escapeHTML(log.person)+'</h3><p>'+escapeHTML(log.content)+'</p>'+(log.next?'<p>下一步：'+escapeHTML(log.next)+'</p>':'')+'<div class="log-tags"><button class="log-project-link" data-open-project="'+log.projectId+'">'+escapeHTML(p?.name||'项目')+'</button></div></div><button class="icon-button" data-edit-log="'+log.id+'" aria-label="编辑工作记录：'+escapeHTML(log.content.slice(0,30))+'">'+icon('edit')+'</button></article>'}
 function renderLogs(){
@@ -395,10 +419,15 @@ function renderCalendar(){
   $('#calendar-day-detail').innerHTML='<h2>'+shortDate(selected)+' · 周'+weekLabels[(parseDate(selected).getDay()+6)%7]+'</h2>'+(content||'<p class="project-task-empty">这天还没有安排，留点空间给新的想法。</p>')+'<div class="calendar-day-actions"><button class="subtle-button" data-add-date="'+selected+'">'+icon('plus')+'添加任务</button><button class="subtle-button" data-log-date="'+selected+'">记录工作</button></div>'+attendanceDayForm(selected);
 }
 
+function projectSpecsMarkup(project,detail=false){
+  const specs=project.specs||{},items=[['分辨率',specs.resolution],['帧率',specs.frameRate?specs.frameRate+' fps':''],['成片时长',specs.runtime]];
+  return (items.some(([,value])=>value)?'<div class="project-specs">'+items.filter(([,value])=>value).map(([label,value])=>'<span><small>'+label+'</small>'+escapeHTML(value)+'</span>').join('')+'</div>':'')+(detail&&specs.remarks?'<div class="project-remarks"><strong>备注</strong><p>'+escapeHTML(specs.remarks)+'</p></div>':'');
+}
+
 let openLogAfterProject=false,pendingLogDate=null;
 function memberEditorRow(member={id:uid(),name:'',role:''}){return '<div class="member-editor-row" data-member-id="'+member.id+'"><input class="member-name" value="'+escapeHTML(member.name)+'" maxlength="40" required aria-label="人员姓名" placeholder="姓名"><input class="member-role" value="'+escapeHTML(member.role)+'" maxlength="40" aria-label="人员分工" placeholder="负责什么"><button type="button" class="icon-button" data-remove-member="'+member.id+'" aria-label="移除人员">'+icon('x')+'</button></div>'}
 function openProject(id=null){
-  const p=getProject(id);editingProjectId=p?.id||null;$('#project-form').reset();$('#project-error').textContent='';$('#project-dialog-title').textContent=p?'编辑项目资料':'新建一个剪辑项目';$('#save-project').textContent=p?'保存资料':'创建项目';$('#project-name').value=p?.name||'';$('#project-brief').value=p?.brief||'';$('#project-start').value=p?p.start:today();$('#project-due').value=p?.due||'';$('#member-editor').innerHTML=(p?.members||[{id:uid(),name:'我',role:'剪辑师'}]).map(memberEditorRow).join('');$('#archive-project').hidden=!p;$('#archive-project').textContent=p?.archived?'恢复项目':'归档项目';$('#project-dialog').showModal();$('#project-name').focus();
+  const p=getProject(id);editingProjectId=p?.id||null;$('#project-form').reset();$('#project-error').textContent='';$('#project-dialog-title').textContent=p?'编辑项目资料':'新建一个剪辑项目';$('#save-project').textContent=p?'保存资料':'创建项目';$('#project-name').value=p?.name||'';$('#project-brief').value=p?.brief||'';for(const [key,id] of Object.entries({resolution:'project-resolution',frameRate:'project-frame-rate',runtime:'project-runtime',remarks:'project-remarks'}))$('#'+id).value=p?.specs?.[key]||'';$('#project-start').value=p?p.start:today();$('#project-due').value=p?.due||'';$('#member-editor').innerHTML=(p?.members||[{id:uid(),name:'我',role:'剪辑师'}]).map(memberEditorRow).join('');$('#archive-project').hidden=!p;$('#archive-project').textContent=p?.archived?'恢复项目':'归档项目';$('#project-dialog').showModal();$('#project-name').focus();
 }
 function openProjectPage(id){if(!getProject(id))return;currentProjectId=id;view='project';render()}
 function updatePeopleOptions(id){const p=getProject(id);$('#project-people').innerHTML=(p?.members||[]).map(m=>'<option value="'+escapeHTML(m.name)+'">'+escapeHTML(m.role)+'</option>').join('')}
@@ -418,8 +447,9 @@ $('#project-form').onsubmit=event=>{
   if(previous&&[...store.logs.filter(l=>l.projectId===previous.id).map(l=>l.date),...store.updates.filter(u=>u.projectId===previous.id).map(u=>u.at.slice(0,10))].some(date=>date<start))return error('开始日期不能晚于这个项目已有的工作记录或进度更新。');
   const members=$$('.member-editor-row',$('#member-editor')).map(row=>({id:row.dataset.memberId,name:$('.member-name',row).value.trim(),role:$('.member-role',row).value.trim()}));
   if(!members.length||members.some(m=>!m.name))return error('请至少填写一位参与人员的姓名。');if(new Set(members.map(m=>m.name.toLowerCase())).size!==members.length)return error('参与人员姓名有重复，请用不同名称区分。');
-  const p={id:previous?.id||uid(),name,brief,start,due,members,status:previous?.status||'active',progress:previous?.progress||0,stage:previous?.stage||'前期沟通',createdAt:previous?.createdAt||localTimestamp(),updatedAt:localTimestamp(),archived:previous?.archived||false,sample:previous?.sample||false};
-  if(previous)store.projects[store.projects.indexOf(previous)]=p;else store.projects.push(p);store.tasks.filter(t=>t.projectId===p.id).forEach(t=>t.project=p.name);persist();$('#project-dialog').close();currentProjectId=p.id;view='project';render();toast(previous?'项目资料已更新。':'项目建好了，记录第一步进展吧。');if(openLogAfterProject){openLogAfterProject=false;openLog(null,p.id,pendingLogDate||today());pendingLogDate=null}
+  let specs;try{specs=validateProjectSpecs({resolution:$('#project-resolution').value.trim(),frameRate:$('#project-frame-rate').value,runtime:$('#project-runtime').value.trim(),remarks:$('#project-remarks').value.trim()})}catch(e){return error(e.message)}
+  const p={...(Object.values(specs).some(Boolean)?{specs}:{}),id:previous?.id||uid(),name,brief,start,due,members,status:previous?.status||'active',progress:previous?.progress||0,stage:previous?.stage||'前期沟通',createdAt:previous?.createdAt||localTimestamp(),updatedAt:localTimestamp(),archived:previous?.archived||false,sample:previous?.sample||false};
+  if(previous)store.projects[store.projects.indexOf(previous)]=p;else store.projects.push(p);store.tasks.filter(t=>t.projectId===p.id).forEach(t=>t.project=p.name);persist();$('#project-dialog').close();render();toast(previous?'项目资料已更新。':'项目建好了，记录第一步进展吧。');if(openLogAfterProject){openLogAfterProject=false;openLog(null,p.id,pendingLogDate||today());pendingLogDate=null}
 };
 $('#project-dialog').addEventListener('close',()=>{if(!$('#log-dialog').open)queueMicrotask(()=>{if(!$('#log-dialog').open)openLogAfterProject=false})});
 $('#add-member').onclick=()=>{if($$('.member-editor-row',$('#member-editor')).length>=30){$('#project-error').textContent='一个项目最多记录 30 位参与人员。';return}$('#member-editor').insertAdjacentHTML('beforeend',memberEditorRow())};
@@ -551,9 +581,9 @@ $('#attendance-import').onchange=async event=>{
     confirmAction('导入个人资料','将合并 '+preview.attendanceCount+' 条考勤、新增 '+preview.added+' 个项目，并将 '+preview.completed+' 个同名项目标记为已完成。同日考勤以导入内容为准；其他记录会保留。','确认导入',()=>{
       try{
         const result=mergePersonalData(store,raw),before=JSON.stringify(store);
-        localStorage.setItem('daynote.before-personal-import',before);
+        importCheckpoint=before;
         store=result.value;if(!persist()){store=validateStore(JSON.parse(before));render();return}
-        render();toast('已合并资料，导入前备份已保留。',()=>{store=validateStore(JSON.parse(before));persist();render()});
+        render();toast('已合并资料，正在保存到 GitHub。',()=>{store=validateStore(JSON.parse(before));persist();render()});
       }catch(error){toast('未完成导入：'+error.message)}
     });
   }catch(e){toast(e instanceof SyntaxError?'文件格式无法识别，请选择 JSON 文件。':e.message)}
@@ -590,7 +620,6 @@ document.addEventListener('click',e=>{
  document.querySelector('#confirm-dialog [data-close="confirm-dialog"].subtle-button').textContent='继续编辑';
 },true);
 window.addEventListener('beforeunload',event=>{if([...document.querySelectorAll('.attendance-day-form[data-dirty="true"]')].some(form=>!form.closest('[hidden]'))){event.preventDefault();event.returnValue=''}});
-window.addEventListener('storage',event=>{if(event.key==='daynote.v1')toast('另一个旧版页面有更新。请刷新所有日序页面后继续编辑；旧版数据仍保留在原处。')});
 document.addEventListener('click',event=>{
  if(event.target.closest('[data-calendar-date]')&&matchMedia('(max-width:1100px)').matches)$('#calendar-day-detail').scrollIntoView?.({block:'start',behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth'});
 });
@@ -603,13 +632,201 @@ $('#month-grid').addEventListener('keydown',event=>{
 const backupOpen=$('#open-backup').onclick;
 $('#open-backup').onclick=()=>{
  backupOpen();let options=$('#personal-backup-options');
- if(!options){options=document.createElement('div');options.id='personal-backup-options';options.innerHTML='<div class="backup-option"><span data-icon="upload"></span><div><strong>合并个人资料</strong><p>补入考勤与历史项目，保留现有任务和日志。</p></div><button class="subtle-button" data-attendance-import="true">选择文件</button></div><div class="backup-option" id="import-checkpoint-option"><span data-icon="download"></span><div><strong>上次导入前的备份</strong><p>导出后可通过「从备份恢复」找回原有记录。</p></div><button class="subtle-button" id="export-import-checkpoint">导出</button></div>';$('#backup-stats').before(options);
-  $('#export-import-checkpoint').onclick=()=>{try{const raw=localStorage.getItem('daynote.before-personal-import');if(raw)downloadJSON(validateStore(JSON.parse(raw)),'日序-导入前备份.json')}catch(e){toast('暂时无法读取导入前备份。')}};
+ if(!options){options=document.createElement('div');options.id='personal-backup-options';options.innerHTML='<div class="backup-option"><span data-icon="upload"></span><div><strong>合并个人资料</strong><p>补入考勤与历史项目，保留现有任务和日志。</p></div><button class="subtle-button" data-attendance-import="true">选择文件</button></div><div class="backup-option" id="import-checkpoint-option"><span data-icon="download"></span><div><strong>本次导入前的备份</strong><p>本次打开期间可导出；历史版本也会保存在 GitHub。</p></div><button class="subtle-button" id="export-import-checkpoint">导出</button></div>';$('#backup-stats').before(options);
+  $('#export-import-checkpoint').onclick=()=>{try{const raw=importCheckpoint;if(raw)downloadJSON(validateStore(JSON.parse(raw)),'日序-导入前备份.json')}catch(e){toast('暂时无法读取导入前备份。')}};
  }
- try{$('#import-checkpoint-option').hidden=!localStorage.getItem('daynote.before-personal-import')}catch(e){$('#import-checkpoint-option').hidden=true}
+ try{$('#import-checkpoint-option').hidden=!importCheckpoint}catch(e){$('#import-checkpoint-option').hidden=true}
+};
+
+let planningRange='week',draggingTaskId=null,ignoreTaskClickUntil=0,movingTaskId=null;
+function planningDates(anchor=selected,range=planningRange){
+  const date=parseDate(anchor);let first,last;
+  if(range==='week'){first=startOfWeek(anchor);last=addDays(first,6)}
+  else {date.setDate(1);first=dateKey(date);date.setMonth(date.getMonth()+1,0);last=dateKey(date);if(range==='half'){if(parseDate(anchor).getDate()<=15)last=first.slice(0,8)+'15';else first=first.slice(0,8)+'16'}}
+  const days=[];for(let day=first;day<=last;day=addDays(day,1))days.push(day);return days;
+}
+const planningToolbar=document.createElement('div');planningToolbar.className='planning-toolbar';
+planningToolbar.innerHTML='<div class="range-tabs" role="group" aria-label="安排范围"><button data-plan-range="week" aria-pressed="true">一周</button><button data-plan-range="half" aria-pressed="false">半个月</button><button data-plan-range="month" aria-pressed="false">一个月</button></div><div class="planning-navigation"><button class="icon-button" id="planning-prev" aria-label="上一个时间段">'+icon('chevron-left')+'</button><label class="planning-date-label"><span id="planning-period"></span><input id="planning-date" type="date" aria-label="选择安排日期"></label><button class="icon-button" id="planning-next" aria-label="下一个时间段">'+icon('chevron-right')+'</button><button class="subtle-button" id="planning-today">今天</button></div>';
+$('#week-summary').before(planningToolbar);
+const moveDialog=document.createElement('dialog');moveDialog.id='move-task-dialog';moveDialog.setAttribute('aria-labelledby','move-task-title');
+moveDialog.innerHTML='<form id="move-task-form"><header class="dialog-header"><h2 id="move-task-title">移动到另一天</h2><button type="button" class="icon-button" data-close="move-task-dialog" aria-label="关闭">'+icon('x')+'</button></header><div class="dialog-body"><p id="move-task-name" class="dialog-description"></p><label class="field">安排日期<input type="date" id="move-task-date" required></label></div><footer class="dialog-footer"><button type="button" class="subtle-button" data-close="move-task-dialog">取消</button><button type="submit" class="primary">移动任务</button></footer></form>';
+document.body.append(moveDialog);
+function movePlanningTask(id,date){
+  const task=store.tasks.find(t=>t.id===id);if(!task||!validDate(date)||task.date===date||!taskIsVisible(task))return false;
+  const previous=task.date,sample=task.sample;task.date=date;task.sample=false;persist();render();
+  toast('已移到 '+shortDate(date)+'。',()=>{const current=store.tasks.find(t=>t.id===id);if(current&&current.date===date){current.date=previous;current.sample=sample;persist();render()}});return true;
+}
+renderWeekly=function(){
+  const days=planningDates(),tasks=store.tasks.filter(t=>days.includes(t.date)&&taskIsVisible(t));
+  $('#planning-period').textContent=days[0]+' — '+days.at(-1);$('#planning-date').value=selected;
+  $$('[data-plan-range]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.planRange===planningRange));
+  $('#week-summary').textContent='这段时间安排了 '+tasks.length+' 件事，已完成 '+tasks.filter(t=>t.done).length+' 件。拖动任务到另一天，或点任务右侧的移动按钮。';
+  $('#weekly-grid').dataset.range=planningRange;
+  $('#weekly-grid').innerHTML=days.map(key=>{
+    const date=parseDate(key),list=tasksFor(key).sort((a,b)=>Number(a.done)-Number(b.done)||(a.time||'99').localeCompare(b.time||'99'));
+    return '<article class="card week-card '+(key===today()?'today-card':'')+'" data-drop-date="'+key+'"><div class="week-card-date"><strong>'+shortDate(key)+' · 周'+weekLabels[(date.getDay()+6)%7]+'</strong><span>'+list.filter(t=>t.done).length+' / '+list.length+'</span></div>'+(list.length?list.map(t=>'<div class="planning-task" draggable="true" data-drag-task="'+t.id+'"><button class="week-mini-task '+(t.done?'done':'')+'" data-edit="'+t.id+'">'+icon(t.done?'check':'clock')+'<span>'+(t.time?t.time+' · ':'')+escapeHTML(t.title)+'</span></button><button class="task-move-button" data-move-task="'+t.id+'" title="移动到另一天" aria-label="移动任务：'+escapeHTML(t.title)+'">'+icon('calendar')+'</button></div>').join(''):'<p class="week-card-empty">'+(draggingTaskId?'松开，移到这一天':'留一点空白。')+'</p>')+'<button class="text-button" data-add-date="'+key+'">'+icon('plus')+'添加任务</button></article>';
+  }).join('');
+};
+function shiftPlanning(direction){const days=planningDates();setDate(addDays(direction<0?days[0]:days.at(-1),direction))}
+$('#planning-prev').onclick=()=>shiftPlanning(-1);$('#planning-next').onclick=()=>shiftPlanning(1);$('#planning-today').onclick=()=>setDate(today());$('#planning-date').onchange=e=>setDate(e.target.value);
+document.addEventListener('click',event=>{
+  const range=event.target.closest('[data-plan-range]');if(range){planningRange=range.dataset.planRange;render();return}
+  const move=event.target.closest('[data-move-task]');if(move){const task=store.tasks.find(t=>t.id===move.dataset.moveTask);if(!task)return;movingTaskId=task.id;$('#move-task-name').textContent=task.title;$('#move-task-date').value=task.date;moveDialog.showModal()}
+});
+document.addEventListener('click',event=>{if(Date.now()<ignoreTaskClickUntil&&event.target.closest('#weekly-grid [data-edit]')){event.preventDefault();event.stopImmediatePropagation()}},true);
+$('#move-task-form').onsubmit=event=>{event.preventDefault();if(validDate($('#move-task-date').value)){movePlanningTask(movingTaskId,$('#move-task-date').value);moveDialog.close()}};
+$('#weekly-grid').addEventListener('dragstart',event=>{const row=event.target.closest('[data-drag-task]');if(!row)return;draggingTaskId=row.dataset.dragTask;event.dataTransfer.effectAllowed='move';event.dataTransfer.setData('text/plain',draggingTaskId);row.classList.add('dragging')});
+$('#weekly-grid').addEventListener('dragover',event=>{const card=event.target.closest('[data-drop-date]');if(!draggingTaskId||!card)return;event.preventDefault();event.dataTransfer.dropEffect='move';$$('.drop-target').forEach(el=>el.classList.remove('drop-target'));card.classList.add('drop-target')});
+$('#weekly-grid').addEventListener('dragleave',event=>{const card=event.target.closest('[data-drop-date]');if(card&&!card.contains(event.relatedTarget))card.classList.remove('drop-target')});
+function finishTaskDrag(){draggingTaskId=null;$$('.drop-target,.dragging').forEach(el=>el.classList.remove('drop-target','dragging'))}
+$('#weekly-grid').addEventListener('drop',event=>{const card=event.target.closest('[data-drop-date]');if(!draggingTaskId||!card)return;event.preventDefault();ignoreTaskClickUntil=Date.now()+300;const id=draggingTaskId;finishTaskDrag();movePlanningTask(id,card.dataset.dropDate)});
+$('#weekly-grid').addEventListener('dragend',finishTaskDrag);
+const planningHero=renderHero;
+renderHero=function(){planningHero();if(view==='week'){$('.week-panel').hidden=true;$('#hero-title').textContent='安排可以变，节奏由你定。';$('#hero-copy').textContent='按周、半个月或整月看计划，拖一拖，就能调整下一步。';$('#view-name').textContent='计划安排';document.title='日序 Daynote · 计划安排'}};
+const planningNav=$('[data-nav="week"]');planningNav.childNodes.forEach(node=>{if(node.nodeType===3)node.textContent='计划安排'});$('#week-view').setAttribute('aria-label','计划安排');
+
+// Personal records live in the private repository, never in browser storage.
+const SYNC_ENDPOINT=location.hostname==='127.0.0.1'||location.hostname==='localhost'?location.origin:'https://nigel-daynote.kongbai0101.chatgpt.site';
+// The only persistent browser value is a random device credential, never records.
+function deviceCredential(){
+  const name=location.protocol==='https:'?'__Host-daynote-device':'daynote-device-dev';
+  let value=document.cookie.split('; ').find(x=>x.startsWith(name+'='))?.slice(name.length+1);
+  if(!/^[a-f0-9]{64}$/.test(value||'')){
+    value=Array.from(crypto.getRandomValues(new Uint8Array(32)),b=>b.toString(16).padStart(2,'0')).join('');
+    document.cookie=name+'='+value+'; Max-Age=31536000; Path=/; SameSite=Strict'+(location.protocol==='https:'?'; Secure':'');
+  }
+  return value;
+}
+let syncReady=false,syncRevision=null,syncPending=false,syncSaving=false,syncConflict=false,syncTimer=null,importCheckpoint=null,pendingRecoveryId=null,lastSyncAttempt=null;
+function syncStatus(text,problem=false){
+  $('#save-state').textContent=text;$('#save-state').classList.toggle('warning',problem);
+}
+async function syncRequest(method,body,path='/api/data'){
+  const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),45000);
+  try{
+    const response=await fetch(SYNC_ENDPOINT+path,{method,mode:'cors',cache:'no-store',credentials:'omit',headers:{'X-Daynote-Client':'daynote','Authorization':'Bearer '+deviceCredential(),...(body?{'Content-Type':'application/json'}:{})},...(body?{body:JSON.stringify(body)}:{}),signal:controller.signal});
+    let value;try{value=await response.json()}catch{throw Error('同步服务返回了无法读取的内容。')}
+    if(!response.ok){const error=Error(response.status===409?'其他页面已有更新，本页改动尚未上传。':(value.error?.message||'暂时无法连接 GitHub。'));error.status=response.status;error.deviceCode=value.deviceCode;throw error}
+    return value;
+  }finally{clearTimeout(timeout)}
+}
+function showSyncFailure(message){
+  storageBlocked=true;syncStatus(syncConflict?'存在不同版本，尚未保存':'尚未保存到 GitHub',true);
+  $('#storage-warning').hidden=false;
+  $('#storage-warning').textContent=message+' 本页内容仍保留，请先不要关闭页面。';
+  $('#sync-actions').hidden=false;$('#sync-retry').hidden=syncConflict;$('#sync-reload').hidden=!syncConflict;
+}
+async function flushSync(){
+  clearTimeout(syncTimer);if(!syncReady||syncSaving||!syncPending||syncConflict)return;
+  syncSaving=true;syncPending=false;syncStatus('正在保存到 GitHub…');
+  try{
+    const snapshot=validateStore(JSON.parse(JSON.stringify(store)));
+    lastSyncAttempt=JSON.stringify(snapshot);
+    const result=await syncRequest('PUT',{data:snapshot,revision:syncRevision});
+    if(typeof result.revision!=='string'||!result.revision)throw Error('尚未收到 GitHub 保存确认。');
+    syncRevision=result.revision;storageBlocked=false;pendingRecoveryId=null;
+    if(!syncPending){syncStatus('已保存到 GitHub');$('#storage-warning').hidden=true;$('#sync-actions').hidden=true}
+  }catch(error){syncPending=true;syncConflict=error.status===409;showSyncFailure(syncConflict?'其他页面已有更新。请导出本页改动，再载入最新记录。':'保存暂未完成，可检查网络后重试。')}
+  finally{syncSaving=false}
+  if(syncPending&&!storageBlocked&&!syncConflict)syncTimer=setTimeout(flushSync,350);
+}
+function queueCloudSave(){
+  if(!syncReady)return false;
+  syncPending=true;
+  if(!syncConflict&&!storageBlocked){syncStatus('等待保存…');clearTimeout(syncTimer);syncTimer=setTimeout(flushSync,350)}
+  return true;
+}
+async function connectCloud(){
+  if(syncReady&&(syncPending||syncSaving))return;
+  $('#sync-connect').disabled=true;$('#sync-gate-message').textContent='正在读取你保存在 GitHub 的记录…';
+  syncStatus('正在连接…');
+  try{
+    const result=await syncRequest('GET');
+    if(typeof result.revision!=='string'||!result.revision)throw Error('没有找到可读取的记录。');
+    const next=validateStore(result.data),pending=result.pending?validateStore(result.pending.data):null;
+    store=next;syncRevision=result.revision;syncReady=true;storageBlocked=false;syncConflict=false;
+    render();document.body.classList.remove('sync-loading');$('#sync-gate').hidden=true;
+    document.querySelector('.sidebar').inert=false;$('#main').inert=false;
+    $('#storage-warning').hidden=true;$('#sync-actions').hidden=true;syncStatus('已保存到 GitHub');
+    if(result.pending){
+      store=pending;pendingRecoveryId=result.pending.id;syncPending=true;syncConflict=result.pending.revision!==syncRevision;render();
+      showSyncFailure(syncConflict?'找到了上次未上传的改动，同时 GitHub 已有其他更新。请先导出本页副本，再载入最新记录。':'找到了上次未上传的改动，已为你恢复到本页。点击重试保存即可继续。');
+    }
+  }catch(error){
+    $('#sync-gate-message').textContent=error.status===401?'这台设备尚未连接。设备编号：'+(error.deviceCode||'暂未生成')+'。连接后，直接打开 nigel9.cn 即可使用，无需登录。':'暂时未能连接云端，已有记录不会被清空。请检查网络后重试。';
+    syncStatus(error.status===401?'设备待连接':'等待连接',true);
+  }finally{$('#sync-connect').disabled=false}
+}
+$('#sync-connect').onclick=connectCloud;
+$('#sync-retry').onclick=()=>{storageBlocked=false;flushSync()};
+$('#sync-export').onclick=()=>downloadJSON({...store,exportedAt:new Date().toISOString()},'日序-未同步改动-'+today()+'.json');
+$('#sync-reload').onclick=()=>confirmAction('载入 GitHub 最新记录？','本页尚未上传的改动会被替换。请先用「导出本页改动」留下副本。','已导出，载入最新记录',async()=>{
+  try{
+    // Only retire the pending attempt this page owns; other pages may have newer edits.
+    const latest=await syncRequest('GET');
+    if(latest.pending){
+      const ownsPending=(pendingRecoveryId&&latest.pending.id===pendingRecoveryId)||JSON.stringify(latest.pending.data)===lastSyncAttempt;
+      if(!ownsPending){showSyncFailure('另一个页面还有待保存的改动，请先处理那个页面的记录。');return}
+      await syncRequest('POST',{id:latest.pending.id},'/api/pending/discard');
+    }
+    syncPending=false;syncConflict=false;syncReady=false;pendingRecoveryId=null;document.body.classList.add('sync-loading');$('#sync-gate').hidden=false;document.querySelector('.sidebar').inert=true;$('#main').inert=true;connectCloud();
+  }catch{showSyncFailure('暂未载入最新记录，本页改动仍然保留。')}
+});
+window.addEventListener('beforeunload',event=>{if(syncPending||syncSaving){event.preventDefault();event.returnValue=''}});
+window.addEventListener('online',()=>{if(syncReady&&syncPending&&!syncConflict&&!syncSaving){storageBlocked=false;flushSync()}});
+connectCloud();
+
+// Keep the stored task shape: the end time is derived from start + duration.
+function readTaskTimeRange(){
+  const start=$('#task-time').value,end=$('#task-end').value,nextDay=$('#task-next-day').checked;
+  if(!start&&!end)return {valid:true,scheduled:false,duration:30};
+  if(!start)return {valid:false,field:'#task-time',message:'请填写开始时间，或将两个时间都留空。'};
+  if(!end)return {valid:false,field:'#task-end',message:'请填写结束时间，或将两个时间都留空。'};
+  const timePattern=/^([01]\d|2[0-3]):[0-5]\d$/;
+  if(!timePattern.test(start))return {valid:false,field:'#task-time',message:'开始时间请精确到分钟。'};
+  if(!timePattern.test(end))return {valid:false,field:'#task-end',message:'结束时间请精确到分钟。'};
+  const minutes=value=>Number(value.slice(0,2))*60+Number(value.slice(3));
+  const duration=minutes(end)-minutes(start)+(nextDay?1440:0);
+  if(duration<=0)return {valid:false,field:'#task-end',message:'结束时间需晚于开始时间；跨午夜请勾选“结束于次日”。'};
+  if(duration>1440)return {valid:false,field:'#task-end',message:'单个任务的时间范围不能超过 24 小时。'};
+  return {valid:true,scheduled:true,duration,nextDay};
+}
+function syncTaskTimeRange(){
+  $('#task-time').setCustomValidity('');$('#task-end').setCustomValidity('');
+  const range=readTaskTimeRange(),summary=$('#task-time-summary');
+  if(!range.valid){$(range.field).setCustomValidity(range.message);summary.textContent=range.message;return range}
+  $('#task-duration').value=range.duration;
+  if(!range.scheduled){summary.textContent='填写开始和结束时间后，自动计算用时；也可以都不填。';return range}
+  const hours=Math.floor(range.duration/60),minutes=range.duration%60;
+  const durationText=(hours?hours+' 小时':'')+(hours&&minutes?' ':'')+(minutes?minutes+' 分钟':'');
+  summary.textContent='用时：'+durationText+(range.nextDay?' · 次日结束':'');
+  return range;
+}
+const timeRangeOpenTask=openTask;
+openTask=function(...args){
+  timeRangeOpenTask(...args);
+  const start=$('#task-time').value,duration=Number($('#task-duration').value);
+  $('#task-end').value='';$('#task-next-day').checked=false;
+  if(start&&Number.isInteger(duration)&&duration>=1&&duration<=1440){
+    const total=Number(start.slice(0,2))*60+Number(start.slice(3))+duration;
+    $('#task-end').value=String(Math.floor(total/60)%24).padStart(2,'0')+':'+String(total%60).padStart(2,'0');
+    $('#task-next-day').checked=total>=1440;
+  }
+  syncTaskTimeRange();
+};
+for(const selector of ['#task-time','#task-end','#task-next-day']){
+  $(selector).addEventListener('input',syncTaskTimeRange);
+  $(selector).addEventListener('change',syncTaskTimeRange);
+}
+const timeRangeTaskSubmit=$('#task-form').onsubmit;
+$('#task-form').onsubmit=function(event){
+  const range=syncTaskTimeRange();
+  if(!range.valid){event.preventDefault();$(range.field).reportValidity();return}
+  return timeRangeTaskSubmit.call(this,event);
 };
 
 render();if(storageBlocked)warning(corruptRaw!==null?'已有记录暂时无法读取，原始内容已保留。请通过「数据与备份」恢复有效备份；新内容暂存于本页。':'浏览器暂时无法保存。请在刷新前通过「数据与备份」导出记录。');
 </script>
 </body>
 </html>
+
