@@ -7,6 +7,7 @@ http.createServer((req, res) => {
   const pathname = new URL(req.url, 'http://localhost').pathname;
   if (pathname === '/favicon.ico') { res.writeHead(204); res.end(); return; }
   const assets = {'/assets/SourceHanSansCN-VF.woff2':['assets/SourceHanSansCN-VF.woff2','font/woff2'],'/assets/SourceHanSans-LICENSE.txt':['assets/SourceHanSans-LICENSE.txt','text/plain; charset=utf-8'],'/manifest.webmanifest':['manifest.webmanifest','application/manifest+json'],'/icons/daynote-192.png':['icons/daynote-192.png','image/png'],'/icons/daynote-512.png':['icons/daynote-512.png','image/png']};
+  assets['/downloads/daynote-1.0.0.apk']=['downloads/daynote-1.0.0.apk','application/vnd.android.package-archive'];
   const asset = assets[pathname];
   if (pathname !== '/' && pathname !== '/index.html' && !asset) { res.writeHead(404); res.end('Not found'); return; }
   if (!['GET', 'HEAD'].includes(req.method)) { res.writeHead(405, { Allow: 'GET, HEAD' }); res.end(); return; }
