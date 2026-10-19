@@ -1,0 +1,26 @@
+{
+  "id": "/",
+  "name": "日序 Daynote",
+  "short_name": "日序",
+  "description": "项目、视频进度与日常计划，电脑手机一起接着做。",
+  "lang": "zh-CN",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f6f7f3",
+  "theme_color": "#395547",
+  "icons": [
+    {
+      "src": "/icons/daynote-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/daynote-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
